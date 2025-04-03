@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-03T11:38:56.188Z",
-  "updatedAt": "2025-04-03T20:42:15.715Z",
+  "updatedAt": "2025-04-03T20:44:33.834Z",
   "id": "EhOdzQc94L8cAFbD",
   "name": "Backup | N8n | GitHub",
   "active": false,
@@ -295,32 +295,6 @@
     {
       "parameters": {
         "sendTo": "ailson.rm.dev@gmail.com",
-        "subject": "Backup N8n Worflow's - Edit",
-        "emailType": "text",
-        "message": "Backup N8n Worflow's - Realizado com Sucesso! (Edit)",
-        "options": {
-          "appendAttribution": true
-        }
-      },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.1,
-      "position": [
-        1280,
-        -120
-      ],
-      "id": "fb8e72df-e429-4585-96a5-c1d20829b392",
-      "name": "E-mail Backup N8n - Ok!",
-      "webhookId": "279f3ae2-8910-4912-b9d3-c4bcd95cbabe",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "QdICIsfYcXBJiOak",
-          "name": "conn-gmail-codai"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "sendTo": "ailson.rm.dev@gmail.com",
         "subject": "Backup N8n Worflow's - Create",
         "emailType": "text",
         "message": "Backup N8n Worflow's - Realizado com Sucesso! (Create)",
@@ -331,8 +305,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1280,
-        60
+        1460,
+        -20
       ],
       "id": "c6dce61f-eac6-49ce-b142-feae144b0026",
       "name": "E-mail Backup N8n - Ok!1",
@@ -343,6 +317,24 @@
           "name": "conn-gmail-codai"
         }
       }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        -20
+      ],
+      "id": "2516a194-c4f5-4b01-9aea-a47983909a38",
+      "name": "Aggregate"
     }
   ],
   "connections": {
@@ -481,16 +473,11 @@
         ]
       ]
     },
-    "E-mail Backup N8n - Ok!": {
-      "main": [
-        []
-      ]
-    },
     "GitHub Edit File": {
       "main": [
         [
           {
-            "node": "E-mail Backup N8n - Ok!",
+            "node": "Aggregate",
             "type": "main",
             "index": 0
           }
@@ -498,6 +485,17 @@
       ]
     },
     "GitHub Create File": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
       "main": [
         [
           {
@@ -517,7 +515,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "cb1b220f-ddb6-4f25-8095-535b6376a480",
+  "versionId": "8ec33675-9fa1-4a7a-b979-58f80ad3aa2c",
   "triggerCount": 0,
   "tags": [
     {
