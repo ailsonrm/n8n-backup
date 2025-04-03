@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-03T11:38:56.188Z",
-  "updatedAt": "2025-04-03T19:47:58.741Z",
+  "updatedAt": "2025-04-03T19:52:47.420Z",
   "id": "EhOdzQc94L8cAFbD",
   "name": "Backup | N8n | GitHub",
   "active": false,
@@ -175,7 +175,7 @@
         },
         "filePath": "=vaapty/{{ $('Workflow to Create').item.json.id }}.json",
         "binaryData": true,
-        "commitMessage": "={{ $('Workflow to Create').item.json.name }} {{ $now.toString() }}"
+        "commitMessage": "={{ $('Workflow to Create').item.json.name }}"
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
@@ -209,7 +209,7 @@
         },
         "filePath": "=vaapty/{{ $('Workflow to Edit').item.json.id }}.json",
         "binaryData": true,
-        "commitMessage": "={{ $('Workflow to Edit').item.json.name }} {{ $now.toString() }}"
+        "commitMessage": "={{ $('Workflow to Edit').item.json.name }}"
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
@@ -369,8 +369,20 @@
       "main": [
         [],
         [],
-        [],
-        []
+        [
+          {
+            "node": "Workflow to Edit",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow to Create",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Convert to File Edit": {
@@ -426,7 +438,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "7ffc00a7-5df4-427f-a117-03ce0d4bb7d1",
+  "versionId": "d25fe3e1-ff8c-406d-a9bb-cbd1045b4165",
   "triggerCount": 0,
   "tags": []
 }
