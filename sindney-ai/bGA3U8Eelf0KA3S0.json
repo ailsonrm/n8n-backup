@@ -1,0 +1,2114 @@
+{
+  "createdAt": "2025-03-30T03:14:07.600Z",
+  "updatedAt": "2025-04-03T20:26:04.276Z",
+  "id": "bGA3U8Eelf0KA3S0",
+  "name": "Project | Sindnei-AI | CXA",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Pausa para Atendimento Humano",
+        "height": 440,
+        "width": 1000,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        140,
+        820
+      ],
+      "typeVersion": 1,
+      "id": "bd0dd800-2f15-4534-bcdc-0dfcff224157",
+      "name": "Sticky Note29",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "sindnei-ai",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        160,
+        920
+      ],
+      "id": "30c21d0f-94f5-4946-905a-63a11e319484",
+      "name": "Webhook",
+      "webhookId": "153099f1-d1d2-4777-be6d-aeaa613f245f"
+    },
+    {
+      "parameters": {
+        "content": "## Registro de Cliente no Supabase",
+        "height": 440,
+        "width": 680,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1180,
+        820
+      ],
+      "typeVersion": 1,
+      "id": "93fc3884-c1d0-4989-8243-6bebf4c1e8bd",
+      "name": "Sticky Note22",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Classifica Mensagens",
+        "height": 440,
+        "width": 700,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1900,
+        820
+      ],
+      "typeVersion": 1,
+      "id": "74790b41-1d2a-45cb-b944-bd69f1be2d6e",
+      "name": "Sticky Note28",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('payload_handler').item.json.message.type }}",
+                    "rightValue": "text",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "5babf18b-3925-426c-b907-e8f3e7936ffc"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d8c1d47a-0014-4d4c-8c43-c68df3a99df2",
+                    "leftValue": "={{ $('payload_handler').item.json.message.type }}",
+                    "rightValue": "audio",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "audio"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1960,
+        880
+      ],
+      "id": "9e4f6772-b2b6-43cd-aec7-de15a28e3c9a",
+      "name": "message-type"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "binaryPropertyName": "=data",
+        "options": {
+          "language": "pt"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2420,
+        1100
+      ],
+      "id": "d1cb7159-73ee-401d-80a2-2bb923885f3f",
+      "name": "openai-transcribe-audio",
+      "credentials": {
+        "openAiApi": {
+          "id": "01FjxP3nXBoPqAZI",
+          "name": "conn-openai-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "push",
+        "list": "={{ $('payload_handler').item.json.contact.phone }}_sindnei_01_msg_buffer",
+        "messageData": "={{ $('payload_handler').item.json.message.text.conversation }}",
+        "tail": true
+      },
+      "id": "4404e51a-9aee-4a3d-af33-66798498ebb1",
+      "name": "Text Memory",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        2700,
+        900
+      ],
+      "credentials": {
+        "redis": {
+          "id": "V7I628KPjYoW7zjF",
+          "name": "conn-redis-server-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "push",
+        "list": "={{ $('payload_handler').item.json.contact.phone }}_sindnei_01_msg_buffer",
+        "messageData": "={{ $('openai-transcribe-audio').item.json.text }}",
+        "tail": true
+      },
+      "id": "9ede7aef-b0ba-44e4-924c-9d62bead567e",
+      "name": "Audio Memory",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        2700,
+        1060
+      ],
+      "credentials": {
+        "redis": {
+          "id": "V7I628KPjYoW7zjF",
+          "name": "conn-redis-server-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $item(0).$node[\"Compara Get Memory\"].json[\"Redis2\"]; // Obtém o valor de Redis2 do nó \"If\"\n\n// Verifica se o dado é uma string que representa um array, e converte se necessário\nlet array = Array.isArray(data) ? data : JSON.parse(data);\n\n// Junta os elementos do array com um espaço entre eles\nconst mensagem_completa = array.join(\" \");\n\n// Retorna o resultado com o nome da variável \"mensagem_completa\"\nreturn [{ json: { mensagem_completa } }];\n"
+      },
+      "id": "ed903d0d-a597-4f9a-a71a-22b8d3e9fb90",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3900,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "key": "={{ $('payload_handler').item.json.contact.phone }}_sindnei_01_msg_buffer",
+        "options": {}
+      },
+      "id": "199939c6-f0a5-453a-9a55-6377993f4114",
+      "name": "Get Memory 2",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        3260,
+        980
+      ],
+      "credentials": {
+        "redis": {
+          "id": "V7I628KPjYoW7zjF",
+          "name": "conn-redis-server-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Mensagem Picotada",
+        "height": 440,
+        "width": 1180,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2640,
+        820
+      ],
+      "typeVersion": 1,
+      "id": "fdab60e6-aa30-40c5-8c52-f2a8eadb07e9",
+      "name": "Sticky Note24",
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "id": "c83b38ff-c06c-4c71-8542-597a21cbb017",
+      "name": "Wait 5 seg",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3100,
+        980
+      ],
+      "webhookId": "52441967-5a76-464a-98fd-c5f7e5d90e8a"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "key": "={{ $('payload_handler').item.json.contact.phone }}_sindnei_01_msg_buffer",
+        "options": {}
+      },
+      "id": "1e9ca98e-e7b3-47d9-9111-27c8e211f540",
+      "name": "Get Memory 1",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        2920,
+        980
+      ],
+      "credentials": {
+        "redis": {
+          "id": "V7I628KPjYoW7zjF",
+          "name": "conn-redis-server-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d5a342e9-585b-42ea-be44-644adae10199",
+              "leftValue": "={{ $('Edit Redis Memory').item.json.Redis2 }}",
+              "rightValue": "={{ $('Edit Redis Memory').item.json.Redis1 }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "ecfc6aa1-58d0-4a03-921e-fab14a1b345a",
+      "name": "Compara Get Memory",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3600,
+        980
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Sindnei.AI",
+        "height": 440,
+        "width": 560,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3860,
+        820
+      ],
+      "typeVersion": 1,
+      "id": "a9174d20-dc0b-4ff4-94b1-3c63fa974a36",
+      "name": "Sticky Note4",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        4000,
+        1120
+      ],
+      "id": "cec7803c-f199-4b98-b269-f8b49f167b89",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "01FjxP3nXBoPqAZI",
+          "name": "conn-openai-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('payload_handler').item.json.contact.phone }}_chat_memory",
+        "tableName": "n8n_chat_histories_sindnei_01",
+        "contextWindowLength": 30
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        4160,
+        1120
+      ],
+      "id": "6b9a194a-7edf-4fbd-ad8c-b9b916524727",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "ZaC2FzQI2843ua9k",
+          "name": "conn-postgres-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "11d1612a-4d3d-4678-9c62-873cc94defbd",
+      "name": "OpenAI3",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        4540,
+        1080
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "01FjxP3nXBoPqAZI",
+          "name": "conn-openai-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 4
+      },
+      "id": "fba47186-c516-4588-855b-f7481d92d196",
+      "name": "1,2s1",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        5480,
+        1000
+      ],
+      "webhookId": "b780c57e-4665-46f9-af6a-5c4c735086d2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=message to be splitted: {{ $('sindnei-agent-ai').item.json.output }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Por favor, gere a saída no seguinte formato JSON:\n\n```json\n{\n  \"messages\": [\n    \"splitedMessage\",\n    \"splitedMessage\",\n    \"splitedMessage\"\n  ]\n}\n```\n\nAs mensagens devem ser divididas de forma natural e legível, considerando que estamos nos comunicando com um humano.\n\nCertifique-se de que a resposta siga exatamente essa estrutura, incluindo colchetes, aspas e a formatação do texto.\n\nRegras de Formatação:\n  Negrito: Use *palavra* em vez de **palavra**.\n  Tachado: Para indicar texto excluído ou alterado.\n  Itálico: Utilize apenas em casos extremamente raros.\n  link: Sempre usar essa formatação para todos os links.\n\nRegras para separação das mensagens:\nMensagem de introdução: Deve ser uma mensagem separada.\nDetalhes do agendamento: Devem ser mantidos juntos em uma única mensagem, usando \\n para quebras de linha.\nMensagem final de suporte: Deve ser separada."
+            }
+          ]
+        }
+      },
+      "id": "fc224531-08ba-4511-ad6d-5ad4e51e95dd",
+      "name": "Parser  Chain",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [
+        4540,
+        900
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "={{ $('payload_handler').item.json.contact.phone }}_sindnei_01_msg_buffer"
+      },
+      "id": "aad49b16-fe74-4a86-a94e-a74e366f6761",
+      "name": "Delete Memory",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        5280,
+        860
+      ],
+      "credentials": {
+        "redis": {
+          "id": "V7I628KPjYoW7zjF",
+          "name": "conn-redis-server-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "sindnei_01_residents",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "id",
+              "fieldValue": "={{ $('payload_handler').item.json.contact.phone.toNumber() }}"
+            },
+            {
+              "fieldId": "name",
+              "fieldValue": "={{ $('payload_handler').item.json.contact.fullName }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        1060
+      ],
+      "id": "dc161ae5-5487-4aa6-8e73-42147a91e5d1",
+      "name": "supabase-create-lead",
+      "credentials": {
+        "supabaseApi": {
+          "id": "VsqrwGucgRNjLoIu",
+          "name": "conn-supabase-codai"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4a6d9aac-8565-4c58-abe3-8741393a5535",
+              "leftValue": "={{ $('supabase-get-lead').item.json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1400,
+        900
+      ],
+      "id": "220bd2ee-9d1b-4e2d-afe1-74ae18a782eb",
+      "name": "if-existing-lead"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "sindnei_01_residents",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $('payload_handler').item.json.contact.phone.toNumber() }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1220,
+        900
+      ],
+      "id": "2456edbb-1e57-45b4-b135-19067686a5d2",
+      "name": "supabase-get-lead",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "VsqrwGucgRNjLoIu",
+          "name": "conn-supabase-codai"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## R.A.G",
+        "height": 420,
+        "width": 560
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3860,
+        1300
+      ],
+      "typeVersion": 1,
+      "id": "7a37f4d0-57e1-4236-aa08-4f4a763362b8",
+      "name": "Sticky Note5",
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        940,
+        1100
+      ],
+      "id": "d28438e7-937a-49c3-a253-1c2ce607bddb",
+      "name": "Não faz nada - Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f336a1ff-e577-489d-a739-1eb8bd509245",
+              "name": "Redis2",
+              "value": "={{ $('Get Memory 2').item.json.propertyName }}",
+              "type": "string"
+            },
+            {
+              "id": "946d1420-e379-46e3-8fcd-3816340fbabb",
+              "name": "Redis1",
+              "value": "={{ $('Get Memory 1').item.json.propertyName }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "03f67f5c-89df-4458-9db3-860ba10dbfe1",
+      "name": "Edit Redis Memory",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3420,
+        980
+      ]
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"messages\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"required\": [\"messages\"]\n}"
+      },
+      "id": "ff08935e-1d79-429e-acf3-81265964211f",
+      "name": "OutputParser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        4700,
+        1080
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output.messages",
+        "options": {
+          "destinationFieldName": "output"
+        }
+      },
+      "id": "eefc17ff-a01f-4f7d-ace4-139c542a17ac",
+      "name": "Segmento de Msgs",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        4860,
+        900
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "361c737b-c06c-4726-bfb1-93aefb60bc43",
+      "name": "Loop Over Items1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        5060,
+        900
+      ]
+    },
+    {
+      "parameters": {
+        "name": "get_cond_jardins_bresser_info",
+        "description": "Regulamento interno do condomínio, use para responder os moradore, com base nos documentos, tire as dúvidas e questionamentos sobre o condomínio.",
+        "topK": "=10"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        4120,
+        1320
+      ],
+      "id": "191e3fc7-f549-4095-8908-11ecf89a977e",
+      "name": "Answer questions with a vector store"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        4220,
+        1460
+      ],
+      "id": "efef0d8a-b61d-4d7a-9e91-5dae866b53e7",
+      "name": "OpenAI Chat Model RAG",
+      "credentials": {
+        "openAiApi": {
+          "id": "01FjxP3nXBoPqAZI",
+          "name": "conn-openai-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Scan Google Drive para o Banco de Dados Vetorial.",
+        "height": 620,
+        "width": 2460,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        140,
+        1300
+      ],
+      "typeVersion": 1,
+      "id": "bc32fec8-8e66-40e9-832c-a49da8ff521f",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1880,
+        1500
+      ],
+      "id": "87fb0c59-3a80-4dd4-91b5-f1a7269853cc",
+      "name": "Embeddings OpenAI3",
+      "credentials": {
+        "openAiApi": {
+          "id": "01FjxP3nXBoPqAZI",
+          "name": "conn-openai-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        560,
+        1480
+      ],
+      "id": "aff7a5df-5df8-44b1-a29c-1de87604f85d",
+      "name": "loop-files"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        1340
+      ],
+      "id": "84959db2-d5a7-4e06-b3e5-1b1f8ce53bb4",
+      "name": "The End"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "sindnei_001_docs",
+          "mode": "list",
+          "cachedResultName": "sindnei_001_docs"
+        },
+        "options": {
+          "queryName": "match_documents_sindnei_001"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        1320
+      ],
+      "id": "fd32a87d-2a46-4e4b-8399-638d5dfe344e",
+      "name": "insert-doc-into-vector-store",
+      "credentials": {
+        "supabaseApi": {
+          "id": "VsqrwGucgRNjLoIu",
+          "name": "conn-supabase-codai"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": ">>>",
+      "typeVersion": 1,
+      "position": [
+        2420,
+        1720
+      ],
+      "id": "0ceb65f0-05a4-4686-b98a-05616d635375"
+    },
+    {
+      "parameters": {
+        "content": "## Resposta humanizada\n",
+        "height": 440,
+        "width": 1180,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4460,
+        820
+      ],
+      "typeVersion": 1,
+      "id": "a0a54ec3-bba1-45ea-b796-6dd43ef8e804",
+      "name": "Sticky Note2",
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        180,
+        1480
+      ],
+      "id": "326e8acc-feda-4d80-8981-8809d3a71534",
+      "name": "When clicking ‘Test workflow’",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $now.setLocale('pt-BR').setZone(\"America/Sao_Paulo\") }}",
+        "format": "custom",
+        "customFormat": "EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm",
+        "outputFieldName": "=formattedDate",
+        "options": {
+          "includeInputFields": false,
+          "timezone": true
+        }
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        320,
+        920
+      ],
+      "id": "a67475fd-ead9-45b7-8af6-61dc60ab9692",
+      "name": "Date & Time",
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('payload_handler').item.json.message.fromMe }}",
+                    "rightValue": "fromClient",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "false",
+                      "singleValue": true
+                    },
+                    "id": "8d7d84f4-ab9f-4e1f-9b9a-e83cc4e9bc03"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "User"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "4bee2c7b-e8fa-420c-9d5e-6140002eca91",
+                    "leftValue": "={{ $('payload_handler').item.json.message.fromMe }}",
+                    "rightValue": "eventN8n",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Me"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "40fbb4c3-f89c-4eab-8cbd-5ad683f756c6",
+                    "leftValue": "={{ $('payload_handler').item.json.message.isGroup }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Group"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        680,
+        920
+      ],
+      "id": "6aee8630-7e90-41a9-8648-ac5e0fd9a45e",
+      "name": "switch-msg-from"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0d409c70-6488-4f4f-8681-5bb552563957",
+              "name": "evolution.serverUrl",
+              "value": "={{ $('Webhook').item.json.body.body.server_url }}",
+              "type": "string"
+            },
+            {
+              "id": "4ae67c6f-3fba-45c0-ade2-1fa3731b93e8",
+              "name": "evolution.phone",
+              "value": "={{ $('Webhook').item.json.body.body.sender.split('@')[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "6e253dad-0fbf-4a74-b6a4-618c79bb3460",
+              "name": "evolution.apiKey",
+              "value": "={{ $('Webhook').item.json.body.body.apikey }}",
+              "type": "string"
+            },
+            {
+              "id": "5e3e579f-f9dd-4fb0-9c4b-d2c56b151c55",
+              "name": "contact.phone",
+              "value": "={{ $('Webhook').item.json.body.body.data.key.remoteJid.split('@')[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "877887ea-c7df-4c1e-b6a9-4ec573256127",
+              "name": "contact.firstName",
+              "value": "={{ $('Webhook').item.json.body.body.data.pushName.split(' ')[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "ecc3073f-8c25-41bb-abfe-402c385c6031",
+              "name": "contact.fullName",
+              "value": "={{ $('Webhook').item.json.body.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "d4768288-0024-47c6-b9c6-3dcc9e18c2e0",
+              "name": "message.type",
+              "value": "={{ !!$('Webhook').item.json.body.body.data.message.conversation && 'text' || \n   !!$('Webhook').item.json.body.body.data.message.audioMessage && 'audio'\n}}",
+              "type": "string"
+            },
+            {
+              "id": "20a86b71-c77f-4b4e-9db9-b9964276e67f",
+              "name": "message.text.conversation",
+              "value": "={{ $('Webhook').item.json.body.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "64a79a38-696d-4383-a1a7-527a3ef3a4d4",
+              "name": "message.audio.base64",
+              "value": "={{ $('Webhook').item.json.body.body.data.message.base64 }}",
+              "type": "string"
+            },
+            {
+              "id": "3c159587-cd22-45df-aac7-82add1c9992e",
+              "name": "message.status",
+              "value": "={{ $('Webhook').item.json.body.body.data.status }}",
+              "type": "string"
+            },
+            {
+              "id": "cc95a725-d953-433d-a8ee-aa903f515ca5",
+              "name": "message.timestamp",
+              "value": "={{ DateTime.fromMillis($('Webhook').item.json.body.body.data.messageTimestamp) }}",
+              "type": "string"
+            },
+            {
+              "id": "d65f9d80-5f16-4c29-965b-fc8832fe13eb",
+              "name": "message.fromMe",
+              "value": "={{ $('Webhook').item.json.body.body.data.key.fromMe }}",
+              "type": "boolean"
+            },
+            {
+              "id": "44cce600-ebb8-4242-8008-5da0951d16c5",
+              "name": "message.isGroup",
+              "value": "={{ $('Webhook').item.json.body.body.event != 'messages.upsert' }}",
+              "type": "boolean"
+            },
+            {
+              "id": "c3d798ea-378e-4f39-a764-82ff9733e36a",
+              "name": "message.id",
+              "value": "={{ $('Webhook').item.json.body.body.data.key.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        500,
+        920
+      ],
+      "id": "4dc8e981-5e08-4afd-8b37-07095c1b8a5b",
+      "name": "payload_handler"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {
+          "fileName": "=file_{{ $now.format('yyyyMMdd_HHmmss') }}.ogg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2220,
+        1100
+      ],
+      "id": "061f0e10-a353-4a8a-b63c-592a7e680f05",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "64a79a38-696d-4383-a1a7-527a3ef3a4d4",
+              "name": "base64",
+              "value": "={{ $('payload_handler').item.json.message.audio.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2000,
+        1100
+      ],
+      "id": "a9816a3a-f091-4f8b-a849-690deca34235",
+      "name": "Adapter"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.mensagem_completa }}",
+        "options": {
+          "systemMessage": "=<setup>\nNome do morador: {{ $('payload_handler').item.json.contact.firstName }}  \nHoje é dia {{ $now.setLocale('pt-BR').format(\"EEEE, dd 'de' MMMM 'de' yyyy - HH:mm:ss\") }}.\n</setup>\n\n<easter_eggs>\nAPENAS dê informações dessa seção, se o morador perguntar sobre quem criou vc!\nVocê é o Sindnei, uma inteligência artificial treinada pela CODAI com as regras, políticas e convenções do Condomínio Jardins do Bresser.\n</easter_eggs>\n\n<persona>\nSeu nome é Sindnei, o síndico assistente virtual 24h do Condomínio Jardins do Bresser, localizado na Rua Ipanema, 686 - Mooca, São Paulo - SP, CEP 03164-200, telefone: (11) 2695-2249. Seu papel é guiar os moradores de forma natural e personalizada, sempre com base nas informações disponíveis na tool [get_cond_jardins_bresser_info].\n\nSeu estilo deve ser:\n- 🤝 Amigável e humanizado, como um amigo que entende o dia a dia do morador.\n- 👔 Profissional, mas sem parecer robótico.\n- ✏️ Simples e direto ao ponto, sem jargões técnicos.\n- 💬 Personalize sempre a conversa com base no que o morador disser.\n</persona>\n\n<fluxo_de_atendimento>\n1. 👋 Abertura e conexão:\n   - Cumprimente o morador pelo primeiro nome.\n   - Já no primeiro contato, incentive o uso do áudio de forma amigável:\n     - *\"Oi, [nome_morador]! Tudo bem por aí? 😊 Pode me contar como posso te ajudar! Se for mais fácil, pode mandar um áudio 🎙️ que eu te escuto e respondo rapidinho!\"*\n</fluxo_de_atendimento>\n\n<interpretacao_de_documentos>\n📋 Sempre que o morador solicitar um **resumo**, **síndico atual eleito ou reeleito**, **explicações sobre decisões**, **nome do síndico atual**, ou qualquer assunto relacionado a regras, deliberações ou funcionamento do condomínio, siga esta ordem de prioridade para consultar as informações:\n\n1️⃣ **Ata mais recente:** Sempre considere a ata mais recente como fonte principal e sempre considerando a data atual como base para buscar essa informação no documento mais atual.  \n2️⃣ **Atas anteriores:** Caso o tema não esteja mencionado na ata mais recente, consulte a ata imediatamente anterior.  \n3️⃣ **Regulamento Interno:** Se a informação não for encontrada nas atas, verifique se há orientação no regulamento interno.  \n4️⃣ **Convenção do Condomínio:** Por fim, caso não conste nas atas nem no regulamento, consulte a convenção do condomínio.\n\n🚫 Nunca misture informações antigas se o mesmo assunto já tiver sido atualizado em documentos mais recentes.  \n⚠️ Em caso de conflito entre documentos, siga esta ordem de prioridade: **ata mais recente > regulamento interno > convenção**.  \n</interpretacao_de_documentos>\n\n<instrucoes_gerais>\n🛠️ Todas as informações fornecidas devem ser extraídas exclusivamente da tool [get_cond_jardins_bresser_info].  \n⚠️ *Nunca improvise respostas*. Se algo não estiver no banco vetorial, oriente o morador a procurar o síndico oficial com gentileza no telefone do condomínio.\n\nVocê deve oferecer orientações sobre:\n- 📌 Regras internas  \n- 🏢 Uso das áreas comuns  \n- 🔧 Serviços e manutenções  \n- 📋 Atas e comunicados  \n- 🕐 Horários de funcionamento  \n- 📞 Contatos do condomínio  \n- E outros temas relacionados ao dia a dia do condomínio.\n\nCaso a pergunta **não tenha relação com o condomínio**, oriente o morador com educação e foco.  \n</instrucoes_gerais>\n\n<objetivo>\nAtuar como um síndico virtual prestativo, disponível 24h, oferecendo suporte ágil e confiável com base nas informações reais do banco vetorial.  \nRespeite sempre a privacidade dos moradores.\n</objetivo>\n\n<publico-alvo>\nExclusivamente moradores do Condomínio Jardins do Bresser.\n</publico-alvo>\n\n<escopo>\n✅ Use apenas informações da tool [get_cond_jardins_bresser_info]  \n🚫 Não responda perguntas fora do contexto do condomínio  \n📞 Oriente a procurar o síndico oficial se necessário\n</escopo>\n\n<estilo_de_comunicacao>\n- 👂 Tom acolhedor e próximo  \n- 💬 Comunicação leve e informal (como “Oi! Tudo bem?”)  \n- 🔍 Sempre seja claro e objetivo  \n- 🙌 Use emojis para dar clareza e tornar a conversa mais visual\n</estilo_de_comunicacao>\n\n<formatacao_de_mensagens>\nSempre utilize emojis para identificar e destacar as informações nas mensagens. Aqui vão algumas diretrizes:\n\n📍 Endereços  \n📞 Telefones  \n🌍 Sites  \n⏰ Horários de atendimento  \n📅 Datas e calendário  \n🚗 Carros e veículos  \n❓ Dúvidas e informações  \n✅ Confirmações  \n⚠️ Alertas ou restrições\n\n📌 **Exemplo de mensagem formatada corretamente:**  \n📍 **Endereço do condomínio:** Rua Ipanema, 686 - Mooca, São Paulo - SP, CEP 03164-200.  \n📞 **Telefone:** (11) 2695-2249  \n📅 **Data:** Segunda-feira, 11 de Março de 2025  \n⏰ **Horário de atendimento:** 8h às 17h  \n✅ **Status:** Reservado com sucesso  \n⚠️ **Importante:** O uso do salão está sujeito à taxa e regras do regulamento interno.\n\nUse sempre esse padrão para tornar a comunicação mais clara e confiável.\n</formatacao_de_mensagens>\n\n<diretrizes_eticas>\n🔒 Nunca compartilhe dados pessoais ou internos sem autorização.  \n🤫 Mantenha a confidencialidade das informações dos moradores.\n</diretrizes_eticas>\n\n<limitacoes>\n🚫 Nunca “invente” ou assuma informações fora da tool [get_cond_jardins_bresser_info]  \n🙅‍♂️ Se a resposta não for encontrada, oriente o morador com carinho a procurar o síndico oficial.  \n📅 SEMPRE que o morador quiser tirar dúvidas, leve em consideração os últimos documentos, por exemplo se ele perguntar quando foi a última assembleia, obtenha do documento com a data mais recente.\n</limitacoes>\n\n<encerramento_de_conversa>\nUse encerramentos diferentes dependendo do contexto da conversa. Evite repetir sempre a mesma frase para manter a experiência mais humana e natural. Aqui estão algumas sugestões agrupadas por tipo de situação:\n\n✅ Dúvida resolvida de forma objetiva:\n- \"Qualquer coisa, estou por aqui, viu? 😊\"\n- \"Se pintar mais alguma dúvida, é só me chamar!\"\n- \"Fico à disposição pra qualquer outra coisa.\"\n\n🧾 Quando envolver documentos ou regras:\n- \"Se quiser, posso te ajudar a encontrar isso nos documentos também.\"\n- \"Caso precise localizar essa informação em alguma ata ou regulamento, posso te mostrar como 😊\"\n\n💬 Quando a conversa for mais informal:\n- \"Me dá um alô se precisar de mais alguma coisa! 😉\"\n- \"Só chamar se quiser continuar esse papo!\"\n\n🙌 Após ajuda prática ou orientações rápidas:\n- \"Tudo certo por aí?\"\n- \"Espero ter ajudado!\"\n\n⚠️ Quando não há resposta na base de dados:\n- \"Como essa info não está na minha base, recomendo falar com o síndico oficial, tá bom? 😊\"\n- \"Isso você vai conseguir certinho com o síndico no telefone do condomínio!\"\n\n🧠 *Importante:* O encerramento **não é obrigatório** em toda mensagem. Use apenas quando fizer sentido para o tom da conversa e para manter a naturalidade.\n</encerramento_de_conversa>\n\n<passo_a_passo>\nLógica de atendimento do Sindnei – Assistente Virtual do Condomínio Jardins do Bresser:\n\n1. **Recepção amigável**\n   - Cumprimente o morador pelo primeiro nome.\n   - Incentive de forma natural o uso de áudio, se for o primeiro contato.\n     - *\"Oi, [nome]! Tudo bem por aí? 😊 Se preferir, pode mandar um áudio 🎙️ que eu te escuto rapidinho!\"*\n\n2. **Identificação da solicitação**\n   - Entenda com clareza o que o morador precisa.\n   - Se necessário, peça mais detalhes de forma leve.\n   - Sempre interprete a intenção com base na conversa.\n\n3. **Busca e entrega da informação**\n   - Utilize **exclusivamente** os dados da tool [get_cond_jardins_bresser_info].\n   - Priorize documentos na seguinte ordem:\n     1. 📅 Ata mais recente\n     2. 📄 Atas anteriores\n     3. 📘 Regulamento Interno\n     4. 📙 Convenção do Condomínio\n\n4. **Resposta clara, personalizada e formatada**\n   - Use emojis para facilitar a leitura.\n   - Adapte o tom com base no estilo do morador (mais direto ou informal).\n   - Resuma a informação sem jargões ou excessos técnicos.\n\n5. **Encerramento natural**\n   - Use uma frase de encerramento de acordo com o contexto, seguindo as opções em `<encerramento_de_conversa>`.\n   - **Evite repetir** a mesma mensagem de encerramento em todas as respostas.\n   - Se a conversa estiver fluindo naturalmente, pode encerrar sem frase final.\n\n6. **Limites**\n   - Se a informação **não estiver** na tool, **não improvise**.\n   - Oriente o morador a falar com o síndico de forma educada e gentil.\n     - 📞 *\"Isso você vai conseguir certinho com o síndico pelo telefone do condomínio: (11) 2695-2249.\"*\n</passo_a_passo>"
+        }
+      },
+      "id": "a2862133-1224-418c-bd3a-4638eef2d1e9",
+      "name": "sindnei-agent-ai",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        4120,
+        960
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "sindnei-ai-codai",
+        "remoteJid": "={{ $('payload_handler').item.json.contact.phone }}",
+        "messageText": "={{ $('Loop Over Items1').item.json.output }}",
+        "options_message": {
+          "delay": 2000
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        5280,
+        1020
+      ],
+      "id": "de21e9b5-0afc-4d42-a5ad-246b2407b184",
+      "name": "Evolution API",
+      "credentials": {
+        "evolutionApi": {
+          "id": "AFA66zDXLVtbWuS0",
+          "name": "conn-evolution-sindnei"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "value": "sindnei_001_docs",
+          "mode": "list",
+          "cachedResultName": "sindnei_001_docs"
+        },
+        "options": {
+          "queryName": "match_documents_sindnei_001"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        3900,
+        1440
+      ],
+      "id": "0511b72b-97a2-4a9c-a839-ca86501a10a6",
+      "name": "Supabase Vector Store1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "VsqrwGucgRNjLoIu",
+          "name": "conn-supabase-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        4040,
+        1580
+      ],
+      "id": "35823d2b-da24-4e78-9465-b5f9eab16d17",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "01FjxP3nXBoPqAZI",
+          "name": "conn-openai-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        2820,
+        1520
+      ],
+      "id": "900ef6d4-8a05-4bb6-a379-3d8b143e6532",
+      "name": "When chat message received",
+      "webhookId": "3a87d9e7-9f1b-47f8-88ca-0970086f2443",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "qLGtnQwfSmjupFe0",
+          "mode": "list",
+          "cachedResultName": "OCR EdenAI"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "file_name": "={{ $('loop-files').item.json.name }}"
+          },
+          "matchingColumns": [
+            "file_name"
+          ],
+          "schema": [
+            {
+              "id": "file_name",
+              "displayName": "file_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1480,
+        1560
+      ],
+      "id": "bfaab7df-7394-4f1d-a89f-1b77147bf3a0",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        1500
+      ],
+      "id": "d79f3062-2b83-4f2e-9a6a-bacdb359bbe6",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "chunkSize": 10000,
+        "chunkOverlap": 1000,
+        "options": {
+          "splitCode": "markdown"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        2120,
+        1640
+      ],
+      "id": "61c13468-7460-4c82-9dfe-097993485b4c",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1a361e3f-e955-4846-a3fd-068df085fdec",
+              "name": "=clean_text",
+              "value": "={{ $json.data[0].text || $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        1560
+      ],
+      "id": "19afc71c-d44f-4792-b9b9-8077cb3b843b",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT name FROM storage.objects WHERE bucket_id = 'sindnei1' AND name NOT LIKE '.%'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        360,
+        1480
+      ],
+      "id": "74688b65-bd57-4263-8618-dc80d8938799",
+      "name": "Postgres",
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "ZaC2FzQI2843ua9k",
+          "name": "conn-postgres-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "sindnei1_files",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "file_name",
+              "fieldValue": "={{ $('loop-files').item.json.name }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        1560
+      ],
+      "id": "3f0952db-522b-4ae6-ba85-5cbbc13c715c",
+      "name": "Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "VsqrwGucgRNjLoIu",
+          "name": "conn-supabase-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "sindnei1_files",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "file_name",
+              "condition": "eq",
+              "keyValue": "={{ $('loop-files').item.json.name }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "processed",
+              "fieldValue": "=true"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        340,
+        1700
+      ],
+      "id": "a08b82c3-34bf-47d1-a04c-821422e498e4",
+      "name": "Supabase1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "VsqrwGucgRNjLoIu",
+          "name": "conn-supabase-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "sindnei1_files",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "file_name",
+              "condition": "eq",
+              "keyValue": "={{ $json.name }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        760,
+        1580
+      ],
+      "id": "8b475a3c-109d-46e7-9666-f76ca4d9b77b",
+      "name": "Supabase2",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "VsqrwGucgRNjLoIu",
+          "name": "conn-supabase-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "cf9547e2-4c1c-463c-843c-de801a6fd47e",
+                    "leftValue": "={{ $json.processed }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "false",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Não Processado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.processed }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "id": "7389f352-bf07-431d-bff1-e33b2f142e5d"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Processado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        980,
+        1580
+      ],
+      "id": "c509d126-d123-4bb6-88ce-9b6a4452ca7b",
+      "name": "Switch"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        1700
+      ],
+      "id": "d81449ef-3442-4655-a6a5-47dfcbb2959c",
+      "name": "Próximo"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "sindnei-ai-codai",
+        "remoteJid": "=5511967362820",
+        "messageText": "={{ $json.chatInput }}",
+        "options_message": {
+          "delay": 2000
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        3000,
+        1520
+      ],
+      "id": "48bbb2fb-657b-4615-a137-fbf6c94d4984",
+      "name": "Evolution API1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "AFA66zDXLVtbWuS0",
+          "name": "conn-evolution-sindnei"
+        }
+      },
+      "disabled": true
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "message-type": {
+      "main": [
+        [
+          {
+            "node": "Text Memory",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Adapter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "openai-transcribe-audio": {
+      "main": [
+        [
+          {
+            "node": "Audio Memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Memory": {
+      "main": [
+        [
+          {
+            "node": "Get Memory 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Audio Memory": {
+      "main": [
+        [
+          {
+            "node": "Get Memory 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "sindnei-agent-ai",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Memory 2": {
+      "main": [
+        [
+          {
+            "node": "Edit Redis Memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 5 seg": {
+      "main": [
+        [
+          {
+            "node": "Get Memory 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Memory 1": {
+      "main": [
+        [
+          {
+            "node": "Wait 5 seg",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compara Get Memory": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "sindnei-agent-ai",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "sindnei-agent-ai",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Parser  Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1,2s1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parser  Chain": {
+      "main": [
+        [
+          {
+            "node": "Segmento de Msgs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "supabase-create-lead": {
+      "main": [
+        [
+          {
+            "node": "message-type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "if-existing-lead": {
+      "main": [
+        [
+          {
+            "node": "message-type",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "supabase-create-lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "supabase-get-lead": {
+      "main": [
+        [
+          {
+            "node": "if-existing-lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Redis Memory": {
+      "main": [
+        [
+          {
+            "node": "Compara Get Memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OutputParser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Parser  Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Segmento de Msgs": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Delete Memory",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Evolution API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer questions with a vector store": {
+      "ai_tool": [
+        [
+          {
+            "node": "sindnei-agent-ai",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model RAG": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Answer questions with a vector store",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI3": {
+      "ai_embedding": [
+        [
+          {
+            "node": "insert-doc-into-vector-store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "loop-files": {
+      "main": [
+        [
+          {
+            "node": "The End",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Supabase2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "insert-doc-into-vector-store": {
+      "main": [
+        [
+          {
+            "node": ">>>",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    ">>>": {
+      "main": [
+        [
+          {
+            "node": "Supabase1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "main": [
+        [
+          {
+            "node": "payload_handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "switch-msg-from": {
+      "main": [
+        [
+          {
+            "node": "supabase-get-lead",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Não faz nada - Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Não faz nada - Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "payload_handler": {
+      "main": [
+        [
+          {
+            "node": "switch-msg-from",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adapter": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "openai-transcribe-audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sindnei-agent-ai": {
+      "main": [
+        [
+          {
+            "node": "Parser  Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API": {
+      "main": [
+        [
+          {
+            "node": "1,2s1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store1": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Answer questions with a vector store",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Evolution API1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "insert-doc-into-vector-store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "insert-doc-into-vector-store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "loop-files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase1": {
+      "main": [
+        [
+          {
+            "node": "Próximo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase2": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Próximo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Próximo": {
+      "main": [
+        [
+          {
+            "node": "loop-files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "184b73b6-660e-48c7-9065-ff0905a08e73",
+  "triggerCount": 1,
+  "tags": [
+    {
+      "createdAt": "2025-03-30T03:14:37.966Z",
+      "updatedAt": "2025-04-03T20:26:13.650Z",
+      "id": "NnEsEtAiQ495JCTT",
+      "name": "sindney-ai"
+    }
+  ]
+}
