@@ -1,8 +1,8 @@
 {
   "createdAt": "2025-03-25T20:06:09.478Z",
-  "updatedAt": "2025-04-03T20:25:40.518Z",
+  "updatedAt": "2025-04-03T20:37:09.641Z",
   "id": "9796UrghnkA5TWP9",
-  "name": "Backup | Postgres",
+  "name": "Backup | N8n | VPS Postgres",
   "active": true,
   "nodes": [
     {
@@ -172,7 +172,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "acea62f5-4c92-44ab-b21d-3413396180e0",
+  "versionId": "b7b7841d-038c-4054-b6d8-9b130b68ac18",
   "triggerCount": 1,
   "tags": [
     {
