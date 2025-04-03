@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-03T11:38:56.188Z",
-  "updatedAt": "2025-04-03T21:07:10.549Z",
+  "updatedAt": "2025-04-03T21:08:22.098Z",
   "id": "EhOdzQc94L8cAFbD",
   "name": "Backup | N8n | GitHub",
   "active": false,
@@ -305,7 +305,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1460,
+        1860,
         -20
       ],
       "id": "c6dce61f-eac6-49ce-b142-feae144b0026",
@@ -332,6 +332,29 @@
       ],
       "id": "364335e4-ade6-4b39-8938-e4a8989f90d2",
       "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c5828a68-9fa4-49aa-b382-55e8b9ee9a39",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1520,
+        -20
+      ],
+      "id": "03dd3b18-7efc-498c-8d23-d34525db5847",
+      "name": "Edit Fields"
     }
   ],
   "connections": {
@@ -496,6 +519,17 @@
       "main": [
         [
           {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
             "node": "E-mail Backup N8n - Workflow's - Ok!",
             "type": "main",
             "index": 0
@@ -512,7 +546,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "07150598-3c84-4fc3-b32e-21eb3b93a040",
+  "versionId": "51556dcd-3b6a-4545-9393-20ce7c91d8d9",
   "triggerCount": 0,
   "tags": [
     {
