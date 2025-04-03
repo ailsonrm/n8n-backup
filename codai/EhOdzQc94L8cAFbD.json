@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-03T11:38:56.188Z",
-  "updatedAt": "2025-04-03T21:15:27.185Z",
+  "updatedAt": "2025-04-03T21:15:55.332Z",
   "id": "EhOdzQc94L8cAFbD",
   "name": "Backup | N8n | GitHub",
   "active": false,
@@ -331,7 +331,9 @@
         -20
       ],
       "id": "364335e4-ade6-4b39-8938-e4a8989f90d2",
-      "name": "Merge"
+      "name": "Merge",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -536,7 +538,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "0ec3bcc8-7a01-4bc9-aeb5-5ac3aecd3df1",
+  "versionId": "9481d86c-4b62-4192-a9b9-a88e6323b391",
   "triggerCount": 0,
   "tags": [
     {
