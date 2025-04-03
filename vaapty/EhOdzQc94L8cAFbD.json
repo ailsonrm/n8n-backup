@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-03T11:38:56.188Z",
-  "updatedAt": "2025-04-03T19:21:51.355Z",
+  "updatedAt": "2025-04-03T19:27:49.927Z",
   "id": "EhOdzQc94L8cAFbD",
   "name": "Backup | N8n | GitHub",
   "active": false,
@@ -125,24 +125,6 @@
     },
     {
       "parameters": {
-        "operation": "toJson",
-        "mode": "each",
-        "options": {
-          "format": true,
-          "fileName": "={{ $json.id }}.json"
-        }
-      },
-      "type": "n8n-nodes-base.convertToFile",
-      "typeVersion": 1.1,
-      "position": [
-        860,
-        -160
-      ],
-      "id": "ee87e3d9-33f1-466a-89ba-8be2170441eb",
-      "name": "Convert to File"
-    },
-    {
-      "parameters": {
         "operation": "fromJson",
         "options": {}
       },
@@ -179,21 +161,6 @@
     },
     {
       "parameters": {
-        "mode": "raw",
-        "jsonOutput": "={{ $json.data }}\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        680,
-        -160
-      ],
-      "id": "3437c1c3-72fb-4a98-b5fa-83c80c3f781a",
-      "name": "workflow"
-    },
-    {
-      "parameters": {
         "authentication": "oAuth2",
         "resource": "file",
         "owner": {
@@ -206,15 +173,15 @@
           "value": "={{ $('basic_infos').first().json.repository }}",
           "mode": "name"
         },
-        "filePath": "=vaapty/{{ $('workflow').item.json.id }}.json",
+        "filePath": "=vaapty/{{ $('Workflow to Create').item.json.id }}.json",
         "binaryData": true,
-        "commitMessage": "={{ $('workflow').item.json.name }}"
+        "commitMessage": "={{ $('Workflow to Create').item.json.name }} {{ $now.toString() }}"
       },
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
         1060,
-        -160
+        60
       ],
       "id": "62021d3e-837e-481f-b2ee-e28a0682991d",
       "name": "GitHub Create File",
@@ -224,6 +191,106 @@
           "name": "conn-gitHub"
         }
       }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "file",
+        "operation": "edit",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('basic_infos').first().json.owner }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('basic_infos').first().json.repository }}",
+          "mode": "name"
+        },
+        "filePath": "=vaapty/{{ $('Workflow to Edit').item.json.id }}.json",
+        "binaryData": true,
+        "commitMessage": "={{ $('Workflow to Edit').item.json.name }} {{ $now.toString() }}"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        -120
+      ],
+      "id": "aa5dfbbf-be09-468e-ad26-ebb55d1c4e39",
+      "name": "GitHub Edit File",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "3x94FpEEaWoLTUdB",
+          "name": "conn-gitHub"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "mode": "each",
+        "options": {
+          "format": true,
+          "fileName": "={{ $json.id }}.json"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        860,
+        -120
+      ],
+      "id": "842671bc-8f24-4fd5-b652-960710a8f4fe",
+      "name": "Convert to File Edit"
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "mode": "each",
+        "options": {
+          "format": true,
+          "fileName": "={{ $json.id }}.json"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        860,
+        60
+      ],
+      "id": "ee87e3d9-33f1-466a-89ba-8be2170441eb",
+      "name": "Convert to File Create"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.data }}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        680,
+        -120
+      ],
+      "id": "941a4474-fdd6-45b0-a644-25fc1f4d934d",
+      "name": "Workflow to Edit"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.data }}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        680,
+        60
+      ],
+      "id": "3437c1c3-72fb-4a98-b5fa-83c80c3f781a",
+      "name": "Workflow to Create"
     }
   ],
   "connections": {
@@ -276,17 +343,6 @@
         ]
       ]
     },
-    "Convert to File": {
-      "main": [
-        [
-          {
-            "node": "GitHub Create File",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "GitHub": {
       "main": [
         [
@@ -313,21 +369,60 @@
       "main": [
         [],
         [],
-        [],
         [
           {
-            "node": "workflow",
+            "node": "Workflow to Edit",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow to Create",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "workflow": {
+    "Convert to File Edit": {
       "main": [
         [
           {
-            "node": "Convert to File",
+            "node": "GitHub Edit File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File Create": {
+      "main": [
+        [
+          {
+            "node": "GitHub Create File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow to Edit": {
+      "main": [
+        [
+          {
+            "node": "Convert to File Edit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow to Create": {
+      "main": [
+        [
+          {
+            "node": "Convert to File Create",
             "type": "main",
             "index": 0
           }
@@ -343,7 +438,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "aa3a84cb-bf08-4d9e-900d-b1a8bdfc4a7b",
+  "versionId": "0b5ccd11-a20a-4e37-a2b9-ed73f710b66d",
   "triggerCount": 0,
   "tags": []
 }
