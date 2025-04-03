@@ -1,0 +1,249 @@
+{
+  "createdAt": "2025-03-20T05:38:58.800Z",
+  "updatedAt": "2025-03-30T03:15:02.949Z",
+  "id": "N5sw2mSGfAcQ1GEu",
+  "name": "Project | Vaal-AI | Router",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "vaal-ai-router",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1160,
+        120
+      ],
+      "id": "f73896cf-70ea-46c3-970e-bccb66517961",
+      "name": "Webhook",
+      "webhookId": "d33e3edc-a2fa-4f4b-b0ac-526f2fef511c"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n-main.codai.dev.br/webhook-test/vaal-ai-sdr",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -280,
+        20
+      ],
+      "id": "f9c601c6-1e92-475a-9c60-f28f5713a556",
+      "name": "Vaal-AI SDR Dev",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n-hook.codai.dev.br/webhook/vaal-ai-sdr",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -280,
+        220
+      ],
+      "id": "2d39345f-ce4d-40de-8d4d-f24c36df5aca",
+      "name": "Vaal-AI SDR Prod",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5b21edcc-fa0e-4d14-8156-620853f71a43",
+              "name": "isNoOfficeHour",
+              "value": "={{(() => {\n    const now = new Date();\n    const hour = now.getHours();\n    const minute = now.getMinutes();\n    const isAfterHours = (hour === 18 && minute >= 1) || (hour > 18) || (hour < 9);\n    return isAfterHours ? true : false;\n})()}}",
+              "type": "boolean"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -880,
+        -160
+      ],
+      "id": "da45b970-24dd-4a6a-8b4e-7d9a7552280d",
+      "name": "valida-expediente",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('valida-expediente').item.json['isNoOfficeHour'] }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "false",
+                      "singleValue": true
+                    },
+                    "id": "7734c5f0-8925-4346-a944-4d02e1c5c65b"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Em Expediente"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "4e33e645-05e3-4af5-aaed-0f17657a751e",
+                    "leftValue": "={{ $('valida-expediente').item.json['isNoOfficeHour'] }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Fora do Expediente"
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -680,
+        -160
+      ],
+      "id": "3c321d1e-677e-4f7e-ab9f-b4ad205a0b2c",
+      "name": "router-expediente",
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        -180
+      ],
+      "id": "31754a1d-3f51-4e1b-8e71-dd704c4eab2d",
+      "name": "No Operation, do nothing",
+      "disabled": true
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Vaal-AI SDR Dev",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Vaal-AI SDR Prod",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "valida-expediente": {
+      "main": [
+        [
+          {
+            "node": "router-expediente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "router-expediente": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Vaal-AI SDR Dev",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Vaal-AI SDR Prod",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vaal-AI SDR Dev": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "ef037167-e3ff-409e-adf4-8a26f28e6ed4",
+  "triggerCount": 1,
+  "tags": [
+    {
+      "createdAt": "2025-03-30T03:06:49.624Z",
+      "updatedAt": "2025-03-30T03:06:49.624Z",
+      "id": "YY7a2ZRp9FJZqRDD",
+      "name": "router"
+    },
+    {
+      "createdAt": "2025-03-30T03:14:44.699Z",
+      "updatedAt": "2025-03-30T03:14:44.699Z",
+      "id": "D178iir5EAbPpBLw",
+      "name": "vaal-ai"
+    }
+  ]
+}
