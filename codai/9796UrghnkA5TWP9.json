@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-03-25T20:06:09.478Z",
-  "updatedAt": "2025-04-03T20:37:09.641Z",
+  "updatedAt": "2025-04-03T20:53:38.238Z",
   "id": "9796UrghnkA5TWP9",
   "name": "Backup | N8n | VPS Postgres",
   "active": true,
@@ -67,9 +67,9 @@
     {
       "parameters": {
         "sendTo": "ailson.rm.dev@gmail.com",
-        "subject": "Backup N8n Postgres",
+        "subject": "Backup N8n!",
         "emailType": "text",
-        "message": "Backup N8n Postgres - Realizado com Sucesso!",
+        "message": "={{ `Backup N8n Postgres - Realizado com Sucesso!\\n\\nBackup N8n Evolution - Realizado com Sucesso!` }}",
         "options": {
           "appendAttribution": true
         }
@@ -77,8 +77,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        160,
-        -200
+        380,
+        -80
       ],
       "id": "6a63549c-4f52-4633-99ea-71b45fab033e",
       "name": "E-mail Backup N8n - Ok!",
@@ -92,29 +92,18 @@
     },
     {
       "parameters": {
-        "sendTo": "ailson.rm.dev@gmail.com",
-        "subject": "Backup Evolution Postgres",
-        "emailType": "text",
-        "message": "Backup Evolution Postgres - Realizado com Sucesso!",
-        "options": {
-          "appendAttribution": true
-        }
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
       },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.1,
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
       "position": [
-        160,
-        20
+        180,
+        -80
       ],
-      "id": "8c196c91-c9d7-4b7b-b5a2-cefd3caa6717",
-      "name": "E-mail Backup Evolution - Ok!",
-      "webhookId": "279f3ae2-8910-4912-b9d3-c4bcd95cbabe",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "QdICIsfYcXBJiOak",
-          "name": "conn-gmail-codai"
-        }
-      }
+      "id": "ac989697-50b4-4921-879e-9193c527f451",
+      "name": "Merge"
     }
   ],
   "connections": {
@@ -138,7 +127,7 @@
       "main": [
         [
           {
-            "node": "E-mail Backup N8n - Ok!",
+            "node": "Merge",
             "type": "main",
             "index": 0
           }
@@ -149,7 +138,18 @@
       "main": [
         [
           {
-            "node": "E-mail Backup Evolution - Ok!",
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "E-mail Backup N8n - Ok!",
             "type": "main",
             "index": 0
           }
@@ -172,7 +172,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "b7b7841d-038c-4054-b6d8-9b130b68ac18",
+  "versionId": "2da47d98-4d5b-4745-872f-4efeec5c785b",
   "triggerCount": 1,
   "tags": [
     {
