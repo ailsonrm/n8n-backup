@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-03T11:38:56.188Z",
-  "updatedAt": "2025-04-03T20:36:18.704Z",
+  "updatedAt": "2025-04-03T20:42:15.715Z",
   "id": "EhOdzQc94L8cAFbD",
   "name": "Backup | N8n | GitHub",
   "active": false,
@@ -180,7 +180,7 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        1040,
+        1080,
         60
       ],
       "id": "62021d3e-837e-481f-b2ee-e28a0682991d",
@@ -214,7 +214,7 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        1040,
+        1080,
         -120
       ],
       "id": "aa5dfbbf-be09-468e-ad26-ebb55d1c4e39",
@@ -238,7 +238,7 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        860,
+        880,
         -120
       ],
       "id": "842671bc-8f24-4fd5-b652-960710a8f4fe",
@@ -256,7 +256,7 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        860,
+        880,
         60
       ],
       "id": "ee87e3d9-33f1-466a-89ba-8be2170441eb",
@@ -291,6 +291,58 @@
       ],
       "id": "3437c1c3-72fb-4a98-b5fa-83c80c3f781a",
       "name": "Workflow to Create"
+    },
+    {
+      "parameters": {
+        "sendTo": "ailson.rm.dev@gmail.com",
+        "subject": "Backup N8n Worflow's - Edit",
+        "emailType": "text",
+        "message": "Backup N8n Worflow's - Realizado com Sucesso! (Edit)",
+        "options": {
+          "appendAttribution": true
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1280,
+        -120
+      ],
+      "id": "fb8e72df-e429-4585-96a5-c1d20829b392",
+      "name": "E-mail Backup N8n - Ok!",
+      "webhookId": "279f3ae2-8910-4912-b9d3-c4bcd95cbabe",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QdICIsfYcXBJiOak",
+          "name": "conn-gmail-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "ailson.rm.dev@gmail.com",
+        "subject": "Backup N8n Worflow's - Create",
+        "emailType": "text",
+        "message": "Backup N8n Worflow's - Realizado com Sucesso! (Create)",
+        "options": {
+          "appendAttribution": true
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1280,
+        60
+      ],
+      "id": "c6dce61f-eac6-49ce-b142-feae144b0026",
+      "name": "E-mail Backup N8n - Ok!1",
+      "webhookId": "279f3ae2-8910-4912-b9d3-c4bcd95cbabe",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QdICIsfYcXBJiOak",
+          "name": "conn-gmail-codai"
+        }
+      }
     }
   ],
   "connections": {
@@ -428,6 +480,33 @@
           }
         ]
       ]
+    },
+    "E-mail Backup N8n - Ok!": {
+      "main": [
+        []
+      ]
+    },
+    "GitHub Edit File": {
+      "main": [
+        [
+          {
+            "node": "E-mail Backup N8n - Ok!",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitHub Create File": {
+      "main": [
+        [
+          {
+            "node": "E-mail Backup N8n - Ok!1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -438,7 +517,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "6eeb6ba6-4717-41f1-8fbd-718de7a35525",
+  "versionId": "cb1b220f-ddb6-4f25-8095-535b6376a480",
   "triggerCount": 0,
   "tags": [
     {
