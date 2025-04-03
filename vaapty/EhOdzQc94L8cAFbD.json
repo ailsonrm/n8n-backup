@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-03T11:38:56.188Z",
-  "updatedAt": "2025-04-03T19:46:57.517Z",
+  "updatedAt": "2025-04-03T19:47:58.741Z",
   "id": "EhOdzQc94L8cAFbD",
   "name": "Backup | N8n | GitHub",
   "active": false,
@@ -369,20 +369,8 @@
       "main": [
         [],
         [],
-        [
-          {
-            "node": "Workflow to Edit",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Workflow to Create",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        [],
+        []
       ]
     },
     "Convert to File Edit": {
@@ -438,7 +426,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "393b1058-d628-44bb-a351-7f0840fffbad",
+  "versionId": "7ffc00a7-5df4-427f-a117-03ce0d4bb7d1",
   "triggerCount": 0,
   "tags": []
 }
