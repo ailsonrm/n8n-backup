@@ -1,0 +1,165 @@
+{
+  "createdAt": "2025-03-30T03:06:54.996Z",
+  "updatedAt": "2025-03-31T01:58:44.851Z",
+  "id": "RAXtySOSxQokRtIr",
+  "name": "Project | Sindnei-AI | Router",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "sindnei-ai-router",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1060,
+        -80
+      ],
+      "id": "8869c9d0-5513-4b2c-bb1d-679bf3609bff",
+      "name": "Webhook",
+      "webhookId": "a953b4e1-309f-49f6-be8e-0d5d70d22400"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n-main.codai.dev.br/webhook-test/sindnei-ai",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -700,
+        -180
+      ],
+      "id": "42ac05b7-8acc-4b47-8a31-37de3e7a351a",
+      "name": "Sindnei-AI Dev",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n-hook.codai.dev.br/webhook/sindnei-ai",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -700,
+        20
+      ],
+      "id": "5bedde85-c03a-4083-b45b-3431c8ee6f06",
+      "name": "Sindnei-AI Prod",
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Sindnei-AI Dev",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Sindnei-AI Prod",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sindnei-AI Dev": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "22daa4f5-40ab-4800-84f8-08de0f9297a6",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "createdAt": "2025-03-30T03:06:54.996Z",
+      "updatedAt": "2025-03-30T03:06:54.996Z",
+      "role": "workflow:owner",
+      "workflowId": "RAXtySOSxQokRtIr",
+      "projectId": "10YtjDxRa8bTQp1T",
+      "project": {
+        "createdAt": "2025-03-20T04:55:48.377Z",
+        "updatedAt": "2025-03-20T05:04:33.111Z",
+        "id": "10YtjDxRa8bTQp1T",
+        "name": "Ailson Ramos Moreira <ailson.rm.dev@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "projectRelations": [
+          {
+            "createdAt": "2025-03-20T04:55:48.377Z",
+            "updatedAt": "2025-03-20T04:55:48.377Z",
+            "role": "project:personalOwner",
+            "userId": "f9cec45e-af4c-4b7b-a9fd-bd324de0a257",
+            "projectId": "10YtjDxRa8bTQp1T",
+            "user": {
+              "createdAt": "2025-03-20T04:55:47.707Z",
+              "updatedAt": "2025-03-31T19:19:02.377Z",
+              "id": "f9cec45e-af4c-4b7b-a9fd-bd324de0a257",
+              "email": "ailson.rm.dev@gmail.com",
+              "firstName": "Ailson",
+              "lastName": "Ramos Moreira",
+              "personalizationAnswers": {
+                "version": "v4",
+                "personalization_survey_submitted_at": "2025-03-20T05:11:05.825Z",
+                "personalization_survey_n8n_version": "1.83.2",
+                "companyType": "personal",
+                "reportedSource": "youtube"
+              },
+              "settings": {
+                "userActivated": true,
+                "easyAIWorkflowOnboarded": true,
+                "firstSuccessfulWorkflowId": "bGA3U8Eelf0KA3S0",
+                "userActivatedAt": 1743448740688,
+                "npsSurvey": {
+                  "responded": true,
+                  "lastShownAt": 1742718499763
+                }
+              },
+              "role": "global:owner",
+              "disabled": false,
+              "mfaEnabled": false,
+              "isPending": false,
+              "isOwner": true
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [
+    {
+      "createdAt": "2025-03-30T03:06:49.624Z",
+      "updatedAt": "2025-03-30T03:06:49.624Z",
+      "id": "YY7a2ZRp9FJZqRDD",
+      "name": "router"
+    },
+    {
+      "createdAt": "2025-03-30T03:14:37.966Z",
+      "updatedAt": "2025-03-30T03:14:37.966Z",
+      "id": "NnEsEtAiQ495JCTT",
+      "name": "sindnei-ai"
+    }
+  ]
+}
