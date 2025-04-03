@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-03T11:38:56.188Z",
-  "updatedAt": "2025-04-03T21:15:55.332Z",
+  "updatedAt": "2025-04-03T21:16:31.940Z",
   "id": "EhOdzQc94L8cAFbD",
   "name": "Backup | N8n | GitHub",
   "active": false,
@@ -305,7 +305,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1760,
+        1500,
         -20
       ],
       "id": "c6dce61f-eac6-49ce-b142-feae144b0026",
@@ -334,19 +334,6 @@
       "name": "Merge",
       "alwaysOutputData": true,
       "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "jsCode": "let mensagem = '';\n\nfor (const item of items) {\n  if (item.json.action === 'edit') {\n    mensagem += '📝 Workflow editado com sucesso: ' + item.json.filename + '\\n';\n  }\n  if (item.json.action === 'create') {\n    mensagem += '📁 Novo workflow criado: ' + item.json.filename + '\\n';\n  }\n}\n\nreturn [\n  {\n    json: {\n      mensagem\n    }\n  }\n];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1520,
-        -20
-      ],
-      "id": "cb77ae10-b7f1-402d-97fe-60092949556b",
-      "name": "Code"
     }
   ],
   "connections": {
@@ -511,17 +498,6 @@
       "main": [
         [
           {
-            "node": "Code",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code": {
-      "main": [
-        [
-          {
             "node": "E-mail Backup N8n - Workflow's - Ok!",
             "type": "main",
             "index": 0
@@ -538,7 +514,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "9481d86c-4b62-4192-a9b9-a88e6323b391",
+  "versionId": "8ef1c36f-fa7c-4b0a-b988-9b8200d3f7b7",
   "triggerCount": 0,
   "tags": [
     {
