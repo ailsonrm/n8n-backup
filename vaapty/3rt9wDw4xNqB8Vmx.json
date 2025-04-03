@@ -677,16 +677,16 @@
   "triggerCount": 0,
   "tags": [
     {
-      "createdAt": "2025-03-30T03:14:44.699Z",
-      "updatedAt": "2025-03-30T03:14:44.699Z",
-      "id": "D178iir5EAbPpBLw",
-      "name": "vaal-ai"
-    },
-    {
       "createdAt": "2025-03-30T03:16:11.963Z",
       "updatedAt": "2025-03-30T03:16:11.963Z",
       "id": "2KSwn3diPyrkSmvj",
       "name": "tool"
+    },
+    {
+      "createdAt": "2025-03-30T03:14:44.699Z",
+      "updatedAt": "2025-03-30T03:14:44.699Z",
+      "id": "D178iir5EAbPpBLw",
+      "name": "vaal-ai"
     }
   ]
 }
