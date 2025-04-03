@@ -1,148 +1,10 @@
 {
   "createdAt": "2025-03-20T06:27:56.183Z",
-  "updatedAt": "2025-04-03T08:28:31.059Z",
+  "updatedAt": "2025-04-03T20:17:33.819Z",
   "id": "vlZwBz9sOSpbDLRJ",
   "name": "Project | Vaal-AI | SDR",
   "active": true,
   "nodes": [
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "-- Create a table to store your documents\ncreate table documents (\n  id bigserial primary key,\n  content text, -- corresponds to Document.pageContent\n  metadata jsonb, -- corresponds to Document.metadata\n  embedding vector(1536) -- 1536 works for OpenAI embeddings, change if needed\n);",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.5,
-      "position": [
-        900,
-        580
-      ],
-      "id": "e0673ab3-2c7e-4786-82ae-50ceba624fad",
-      "name": "Postgres",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "content": "### Cria tabela documentos",
-        "height": 240,
-        "width": 260,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        840,
-        520
-      ],
-      "typeVersion": 1,
-      "id": "d0b56d3a-50fd-452c-b796-21974b269957",
-      "name": "Sticky Note31",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "create table dados_cliente (\n  id bigserial primary key,\n  created_at TIMESTAMPTZ, \n  telefone text, \n  sessionid text\n);",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.5,
-      "position": [
-        620,
-        580
-      ],
-      "id": "fdf6cf9a-1962-4a17-a30a-ee12fe29e1ce",
-      "name": "Postgres1",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "content": "### Cria tabela dados_cliente",
-        "height": 240,
-        "width": 260,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        560,
-        520
-      ],
-      "typeVersion": 1,
-      "id": "a6976a56-1987-400b-b86f-17ae9a3bad03",
-      "name": "Sticky Note33",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "create function match_documents (\n  query_embedding vector(1536),\n  match_count int default null,\n  filter jsonb DEFAULT '{}'\n) returns table (\n  id bigint,\n  content text,\n  metadata jsonb,\n  similarity float\n)\nlanguage plpgsql\nas $\n#variable_conflict use_column\nbegin\n  return query\n  select\n    id,\n    content,\n    metadata,\n    1 - (documents.embedding <=> query_embedding) as similarity\n  from documents\n  where metadata @> filter\n  order by documents.embedding <=> query_embedding\n  limit match_count;\nend;\n$;",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.5,
-      "position": [
-        340,
-        580
-      ],
-      "id": "2aab18e7-1b9e-4902-b13c-d89e698f1a49",
-      "name": "Postgres5",
-      "credentials": {
-        "postgres": {
-          "id": "ZaC2FzQI2843ua9k",
-          "name": "conn-postgres-codai"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "content": "### Cria função pesquisa R.A.G",
-        "height": 240,
-        "width": 260,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        280,
-        520
-      ],
-      "typeVersion": 1,
-      "id": "8b991738-ddad-4a9a-b168-b88d4e2ad441",
-      "name": "Sticky Note48",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "create extension vector;",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.5,
-      "position": [
-        60,
-        580
-      ],
-      "id": "b119488c-77e6-4e72-ad94-fc9fb9bde8d3",
-      "name": "Postgres6",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "content": "### Cria Extensão Vector",
-        "height": 240,
-        "width": 260,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        0,
-        520
-      ],
-      "typeVersion": 1,
-      "id": "1d3b5c32-4c91-4110-a9e0-2d801e756850",
-      "name": "Sticky Note50",
-      "disabled": true
-    },
     {
       "parameters": {
         "content": "## Pausa para Atendimento Humano",
@@ -566,38 +428,6 @@
     },
     {
       "parameters": {
-        "operation": "delete",
-        "key": "=5511967362820_msg_buffer"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        340,
-        300
-      ],
-      "id": "fcb13791-ba49-4008-b355-b24b17c88c7d",
-      "name": "redis-clear-messages-buffer",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "content": "Clear Redis Messages Buffer & Memory",
-        "height": 260,
-        "width": 820,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        0,
-        240
-      ],
-      "typeVersion": 1,
-      "id": "debd6aad-05a6-46f8-bab1-530c4a01536f",
-      "name": "Sticky Note1",
-      "disabled": true
-    },
-    {
-      "parameters": {
         "options": {}
       },
       "id": "f805cbf0-fa5c-438b-85ee-4927f61aa79a",
@@ -716,21 +546,6 @@
           "name": "conn-openai-codai"
         }
       }
-    },
-    {
-      "parameters": {
-        "operation": "delete",
-        "key": "=5511967362820_block"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        620,
-        300
-      ],
-      "id": "3b8231cb-6265-4b39-8af9-3af5e2eb2df5",
-      "name": "redis-clear-messages-buffer1",
-      "disabled": true
     },
     {
       "parameters": {
@@ -3429,17 +3244,6 @@
         ]
       ]
     },
-    "redis-clear-messages-buffer": {
-      "main": [
-        [
-          {
-            "node": "redis-clear-messages-buffer1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "OpenAI3": {
       "ai_languageModel": [
         [
@@ -4100,9 +3904,11 @@
       "recurrenceRules": []
     }
   },
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "pinData": {},
-  "versionId": "f374b254-9bd6-44a2-8988-9cbfe857207d",
+  "versionId": "0cd73615-9d05-4573-8334-4341ac75a079",
   "triggerCount": 2,
   "shared": [
     {
