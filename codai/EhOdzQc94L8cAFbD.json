@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-03T11:38:56.188Z",
-  "updatedAt": "2025-04-03T21:08:22.098Z",
+  "updatedAt": "2025-04-03T21:15:27.185Z",
   "id": "EhOdzQc94L8cAFbD",
   "name": "Backup | N8n | GitHub",
   "active": false,
@@ -305,7 +305,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1860,
+        1760,
         -20
       ],
       "id": "c6dce61f-eac6-49ce-b142-feae144b0026",
@@ -335,26 +335,16 @@
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "c5828a68-9fa4-49aa-b382-55e8b9ee9a39",
-              "name": "",
-              "value": "",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
+        "jsCode": "let mensagem = '';\n\nfor (const item of items) {\n  if (item.json.action === 'edit') {\n    mensagem += '📝 Workflow editado com sucesso: ' + item.json.filename + '\\n';\n  }\n  if (item.json.action === 'create') {\n    mensagem += '📁 Novo workflow criado: ' + item.json.filename + '\\n';\n  }\n}\n\nreturn [\n  {\n    json: {\n      mensagem\n    }\n  }\n];\n"
       },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
         1520,
         -20
       ],
-      "id": "03dd3b18-7efc-498c-8d23-d34525db5847",
-      "name": "Edit Fields"
+      "id": "cb77ae10-b7f1-402d-97fe-60092949556b",
+      "name": "Code"
     }
   ],
   "connections": {
@@ -519,14 +509,14 @@
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "Code",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Edit Fields": {
+    "Code": {
       "main": [
         [
           {
@@ -546,7 +536,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "51556dcd-3b6a-4545-9393-20ce7c91d8d9",
+  "versionId": "0ec3bcc8-7a01-4bc9-aeb5-5ac3aecd3df1",
   "triggerCount": 0,
   "tags": [
     {
