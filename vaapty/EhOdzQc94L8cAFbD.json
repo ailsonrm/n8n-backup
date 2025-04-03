@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-03T11:38:56.188Z",
-  "updatedAt": "2025-04-03T19:52:47.420Z",
+  "updatedAt": "2025-04-03T20:08:58.054Z",
   "id": "EhOdzQc94L8cAFbD",
   "name": "Backup | N8n | GitHub",
   "active": false,
@@ -23,12 +23,12 @@
         "operation": "get",
         "owner": {
           "__rl": true,
-          "value": "={{ $('basic_infos').item.json.owner }}",
+          "value": "={{ $('basic_infos').first().json.owner }}",
           "mode": "name"
         },
         "repository": {
           "__rl": true,
-          "value": "={{ $('basic_infos').item.json.repository }}",
+          "value": "={{ $('basic_infos').first().json.repository }}",
           "mode": "name"
         },
         "filePath": "=vaapty/{{ $json.id }}.json",
@@ -53,6 +53,8 @@
     },
     {
       "parameters": {
+        "returnAll": false,
+        "limit": 2,
         "filters": {},
         "requestOptions": {}
       },
@@ -180,7 +182,7 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        1060,
+        1040,
         60
       ],
       "id": "62021d3e-837e-481f-b2ee-e28a0682991d",
@@ -214,7 +216,7 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        1060,
+        1040,
         -120
       ],
       "id": "aa5dfbbf-be09-468e-ad26-ebb55d1c4e39",
@@ -376,13 +378,7 @@
             "index": 0
           }
         ],
-        [
-          {
-            "node": "Workflow to Create",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Convert to File Edit": {
@@ -438,7 +434,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "d25fe3e1-ff8c-406d-a9bb-cbd1045b4165",
+  "versionId": "fd25b83c-3dd4-4c24-9c2f-19dcf444ab3c",
   "triggerCount": 0,
   "tags": []
 }
