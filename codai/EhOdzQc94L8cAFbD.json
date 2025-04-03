@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-03T11:38:56.188Z",
-  "updatedAt": "2025-04-03T20:58:16.957Z",
+  "updatedAt": "2025-04-03T21:04:49.644Z",
   "id": "EhOdzQc94L8cAFbD",
   "name": "Backup | N8n | GitHub",
   "active": false,
@@ -512,7 +512,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "c1fdb2f0-de66-4807-98cd-9be180b97a8c",
+  "versionId": "99b38c5b-4f9c-45d9-97cf-5ae11c8b28c4",
   "triggerCount": 0,
   "tags": [
     {
