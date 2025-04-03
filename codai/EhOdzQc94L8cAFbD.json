@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-03T11:38:56.188Z",
-  "updatedAt": "2025-04-03T20:44:33.834Z",
+  "updatedAt": "2025-04-03T20:54:55.846Z",
   "id": "EhOdzQc94L8cAFbD",
   "name": "Backup | N8n | GitHub",
   "active": false,
@@ -294,32 +294,6 @@
     },
     {
       "parameters": {
-        "sendTo": "ailson.rm.dev@gmail.com",
-        "subject": "Backup N8n Worflow's - Create",
-        "emailType": "text",
-        "message": "Backup N8n Worflow's - Realizado com Sucesso! (Create)",
-        "options": {
-          "appendAttribution": true
-        }
-      },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.1,
-      "position": [
-        1460,
-        -20
-      ],
-      "id": "c6dce61f-eac6-49ce-b142-feae144b0026",
-      "name": "E-mail Backup N8n - Ok!1",
-      "webhookId": "279f3ae2-8910-4912-b9d3-c4bcd95cbabe",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "QdICIsfYcXBJiOak",
-          "name": "conn-gmail-codai"
-        }
-      }
-    },
-    {
-      "parameters": {
         "fieldsToAggregate": {
           "fieldToAggregate": [
             {}
@@ -335,6 +309,32 @@
       ],
       "id": "2516a194-c4f5-4b01-9aea-a47983909a38",
       "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "sendTo": "ailson.rm.dev@gmail.com",
+        "subject": "Backup N8n Worflow's",
+        "emailType": "text",
+        "message": "Backup N8n Worflow's -  Realizado com Sucesso!",
+        "options": {
+          "appendAttribution": true
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1460,
+        -20
+      ],
+      "id": "c6dce61f-eac6-49ce-b142-feae144b0026",
+      "name": "E-mail Backup N8n - Workflow's - Ok!",
+      "webhookId": "279f3ae2-8910-4912-b9d3-c4bcd95cbabe",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QdICIsfYcXBJiOak",
+          "name": "conn-gmail-codai"
+        }
+      }
     }
   ],
   "connections": {
@@ -499,7 +499,7 @@
       "main": [
         [
           {
-            "node": "E-mail Backup N8n - Ok!1",
+            "node": "E-mail Backup N8n - Workflow's - Ok!",
             "type": "main",
             "index": 0
           }
@@ -515,7 +515,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "8ec33675-9fa1-4a7a-b979-58f80ad3aa2c",
+  "versionId": "e9a581b8-288b-41a2-a18e-8a7319446150",
   "triggerCount": 0,
   "tags": [
     {
