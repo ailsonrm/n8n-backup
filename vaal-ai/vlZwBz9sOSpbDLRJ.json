@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-03-20T06:27:56.183Z",
-  "updatedAt": "2025-04-03T20:25:13.382Z",
+  "updatedAt": "2025-04-04T20:36:02.833Z",
   "id": "vlZwBz9sOSpbDLRJ",
   "name": "Project | Vaal-AI | SDR",
   "active": true,
@@ -419,8 +419,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        160,
-        1500
+        40,
+        1480
       ],
       "id": "5da2a229-643e-44c3-afef-c3da4533847d",
       "name": "When clicking ‘Test workflow’",
@@ -1989,8 +1989,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        1340
+        0,
+        1320
       ],
       "typeVersion": 1,
       "id": "35c37df1-6e3a-460c-8513-69a67d93f705",
@@ -2003,8 +2003,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1180,
-        1740
+        1080,
+        1720
       ],
       "id": "985f7948-e6d6-488d-b709-799fb16330c9",
       "name": "Embeddings OpenAI3",
@@ -2024,8 +2024,8 @@
       "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        1500,
-        1880
+        1400,
+        1860
       ],
       "id": "9f10140f-e8be-4a04-aceb-bd913aad114d",
       "name": "Recursive Character Text Splitter"
@@ -2037,8 +2037,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        700,
-        1500
+        600,
+        1480
       ],
       "id": "3db26221-7eec-4303-b8b3-28863706d934",
       "name": "loop-files"
@@ -2062,8 +2062,8 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        300,
-        1500
+        200,
+        1480
       ],
       "alwaysOutputData": true,
       "credentials": {
@@ -2095,8 +2095,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        500,
-        1500
+        400,
+        1480
       ],
       "id": "be281982-c008-49db-9b32-ead0b8c14110",
       "name": "get-all-files",
@@ -2113,8 +2113,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        920,
-        1360
+        820,
+        1340
       ],
       "id": "107f09f8-1432-46d7-8dab-15c74e1a449b",
       "name": "The End"
@@ -2140,8 +2140,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        920,
-        1520
+        820,
+        1500
       ],
       "executeOnce": true,
       "credentials": {
@@ -2159,8 +2159,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        1120,
-        1520
+        1020,
+        1500
       ],
       "id": "b24dd642-df81-4c46-9a1c-3666827a5f12",
       "name": "extract-from-file"
@@ -2179,8 +2179,8 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
       "typeVersion": 1,
       "position": [
-        1340,
-        1520
+        1240,
+        1500
       ],
       "id": "9aa823bc-9c1c-4fa4-bd56-1193069fcb01",
       "name": "insert-doc-into-vector-store",
@@ -2198,8 +2198,8 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1,
       "position": [
-        1340,
-        1720
+        1240,
+        1700
       ],
       "id": "c420c7f0-8b92-4378-befd-90509aab8767",
       "name": "data-loader"
@@ -2210,8 +2210,8 @@
       "name": ">>>",
       "typeVersion": 1,
       "position": [
-        1740,
-        1840
+        1640,
+        1820
       ],
       "id": "764f02e8-950d-41c9-aced-47008a3cbef4"
     },
@@ -3908,7 +3908,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "ff6e21ef-e594-4284-9c3b-e043cde0ea35",
+  "versionId": "8a1c4048-d796-4f75-a112-a1942f32bd90",
   "triggerCount": 2,
   "tags": [
     {
