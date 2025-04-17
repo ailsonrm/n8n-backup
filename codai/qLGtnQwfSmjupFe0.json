@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-03-31T17:30:01.373Z",
-  "updatedAt": "2025-04-03T20:26:43.931Z",
+  "updatedAt": "2025-04-16T13:22:04.456Z",
   "id": "qLGtnQwfSmjupFe0",
   "name": "OCR | EdenAI",
   "active": false,
@@ -36,8 +36,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        480,
-        960
+        540,
+        920
       ],
       "id": "343e4cba-ccae-4bba-973e-b7fbf6cf2f00",
       "name": "HTTP Request1"
@@ -50,7 +50,7 @@
       "typeVersion": 1.1,
       "position": [
         720,
-        960
+        920
       ],
       "id": "7981481d-6230-49b7-8177-0ed5ecd7fce4",
       "name": "Wait",
@@ -84,8 +84,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1040,
-        960
+        1080,
+        920
       ],
       "id": "7e493e49-8d40-4a60-ae2a-0ca03bc96698",
       "name": "If"
@@ -128,8 +128,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        880,
-        960
+        900,
+        920
       ],
       "id": "10ea5d19-2910-425a-9331-3dcccfd7eebf",
       "name": "Busca API"
@@ -146,8 +146,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -20,
-        1040
+        60,
+        920
       ],
       "id": "c22a3373-d00f-49aa-a8aa-68490975e53a",
       "name": "OpenAI Chat Model1",
@@ -173,8 +173,8 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.5,
       "position": [
-        -100,
-        840
+        -40,
+        740
       ],
       "id": "7cddbeae-7050-460e-95c6-4511bfad8341",
       "name": "Verifica se é PDF Nativo"
@@ -206,8 +206,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        220,
-        840
+        320,
+        740
       ],
       "id": "af90085f-f414-4fd1-8d16-915d9a303bc7",
       "name": "If1"
@@ -229,8 +229,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1240,
-        940
+        1280,
+        840
       ],
       "id": "18d06599-947c-4c28-9e7f-741dfc42fdae",
       "name": "Edit Fields2"
@@ -252,8 +252,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        460,
-        760
+        540,
+        720
       ],
       "id": "c376d36f-1ef2-4f8f-bc30-a70227179e30",
       "name": "Normalize"
@@ -267,7 +267,7 @@
       "typeVersion": 1,
       "position": [
         1500,
-        860
+        680
       ],
       "id": "e08fbc1f-f575-443d-a005-c1cb014e8255",
       "name": "Aggregate"
@@ -278,6 +278,12 @@
           "values": [
             {
               "name": "file_name"
+            },
+            {
+              "name": "bucket_id"
+            },
+            {
+              "name": "project_id"
             }
           ]
         }
@@ -307,11 +313,12 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.5,
       "position": [
-        -320,
-        340
+        -20,
+        280
       ],
       "id": "0ac4ac47-d986-4bc3-87e8-5f49425ca95c",
-      "name": "Basic LLM Chain"
+      "name": "Basic LLM Chain",
+      "disabled": true
     },
     {
       "parameters": {
@@ -327,19 +334,19 @@
                 },
                 "conditions": [
                   {
+                    "id": "beaf9ca0-4c14-4c4d-855b-496407297a56",
                     "leftValue": "={{ $('When Executed by Another Workflow').item.json.file_name }}",
-                    "rightValue": ".jpg",
+                    "rightValue": ".txt",
                     "operator": {
                       "type": "string",
                       "operation": "endsWith"
-                    },
-                    "id": "6dac58b4-9515-418b-96c9-637e8dd08e17"
+                    }
                   }
                 ],
                 "combinator": "and"
               },
               "renameOutput": true,
-              "outputKey": "image"
+              "outputKey": "txt"
             },
             {
               "conditions": {
@@ -351,9 +358,9 @@
                 },
                 "conditions": [
                   {
-                    "id": "69507787-7e1d-4de2-a683-77f69204eb65",
+                    "id": "493841b2-caf4-4dc4-a000-e08944c856a3",
                     "leftValue": "={{ $('When Executed by Another Workflow').item.json.file_name }}",
-                    "rightValue": ".png",
+                    "rightValue": "=.doc ",
                     "operator": {
                       "type": "string",
                       "operation": "endsWith"
@@ -363,7 +370,7 @@
                 "combinator": "and"
               },
               "renameOutput": true,
-              "outputKey": "image"
+              "outputKey": "doc"
             },
             {
               "conditions": {
@@ -375,9 +382,9 @@
                 },
                 "conditions": [
                   {
-                    "id": "5619e1c9-b710-4040-b5b9-d58516c709d8",
+                    "id": "445943d8-3fd8-4812-90a8-22f3585fcd60",
                     "leftValue": "={{ $('When Executed by Another Workflow').item.json.file_name }}",
-                    "rightValue": ".jpeg",
+                    "rightValue": ".docx",
                     "operator": {
                       "type": "string",
                       "operation": "endsWith"
@@ -387,7 +394,7 @@
                 "combinator": "and"
               },
               "renameOutput": true,
-              "outputKey": "image"
+              "outputKey": "docx"
             },
             {
               "conditions": {
@@ -438,8 +445,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -240,
-        500
+        60,
+        440
       ],
       "id": "d2284591-e65e-4ed7-b831-d8b3479af241",
       "name": "OpenAI Chat Model",
@@ -448,7 +455,8 @@
           "id": "01FjxP3nXBoPqAZI",
           "name": "conn-openai-codai"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -469,13 +477,13 @@
             {
               "id": "490165ed-8ccb-487c-95c3-e17714dfff0e",
               "name": "supabase.project_id",
-              "value": "bpxjjfjijjefesfbdojl",
+              "value": "={{ $('When Executed by Another Workflow').item.json.project_id }}",
               "type": "string"
             },
             {
               "id": "7a32a56b-7eaf-4f22-94e5-5dfbac4be437",
               "name": "supabase.bucket_id",
-              "value": "sindnei1",
+              "value": "={{ $('When Executed by Another Workflow').item.json.bucket_id }}",
               "type": "string"
             }
           ]
@@ -499,8 +507,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        -300,
-        840
+        -240,
+        740
       ],
       "id": "03c5272d-4f6d-48ff-9e81-f875444618c4",
       "name": "Extract from File"
@@ -519,11 +527,68 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -480,
-        840
+        -460,
+        740
       ],
       "id": "6f365856-3e56-46e6-81ed-8c450d7fa794",
       "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "=https://{{ $('Edit Fields').item.json.supabase.project_id }}.supabase.co/storage/v1/object/public/{{ $('Edit Fields').item.json.supabase.bucket_id }}/{{ $('When Executed by Another Workflow').item.json.file_name }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -460,
+        560
+      ],
+      "id": "fccd9e42-25ed-4721-bccf-1a34b5344c84",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        560
+      ],
+      "id": "33c7bc00-266a-426a-b881-3d369abbb5fe",
+      "name": "Extract from File1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "61dc0775-5e0a-4853-aa8f-aa77ba1d8b71",
+              "name": "text",
+              "value": "={{ $('Extract from File1').item.json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        560
+      ],
+      "id": "08f81599-ab16-4353-aa46-d488003d0067",
+      "name": "Normalize1"
     }
   ],
   "connections": {
@@ -666,21 +731,21 @@
       "main": [
         [
           {
-            "node": "Basic LLM Chain",
+            "node": "HTTP Request2",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Basic LLM Chain",
+            "node": "HTTP Request2",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Basic LLM Chain",
+            "node": "HTTP Request2",
             "type": "main",
             "index": 0
           }
@@ -737,6 +802,39 @@
           }
         ]
       ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File1": {
+      "main": [
+        [
+          {
+            "node": "Normalize1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -747,7 +845,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "017b343f-c834-4b63-a68c-e9cc268e16ce",
+  "versionId": "9e6d7ab6-9e06-4c8f-819e-6be3fb6e7192",
   "triggerCount": 0,
   "tags": [
     {
