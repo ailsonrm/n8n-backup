@@ -1,20 +1,20 @@
 {
   "createdAt": "2025-03-30T03:14:07.600Z",
-  "updatedAt": "2025-04-07T13:01:51.781Z",
+  "updatedAt": "2025-04-16T18:44:46.567Z",
   "id": "bGA3U8Eelf0KA3S0",
-  "name": "Project | Síndney-AI | CXA",
+  "name": "Project | Sindney-AI | CXA",
   "active": true,
   "nodes": [
     {
       "parameters": {
         "content": "## Pausa para Atendimento Humano",
         "height": 440,
-        "width": 1000,
+        "width": 1240,
         "color": 4
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        140,
+        -20,
         820
       ],
       "typeVersion": 1,
@@ -31,7 +31,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        160,
+        20,
         920
       ],
       "id": "30c21d0f-94f5-4946-905a-63a11e319484",
@@ -42,12 +42,12 @@
       "parameters": {
         "content": "## Registro de Cliente no Supabase",
         "height": 440,
-        "width": 680,
+        "width": 600,
         "color": 5
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1180,
+        1260,
         820
       ],
       "typeVersion": 1,
@@ -165,7 +165,7 @@
     {
       "parameters": {
         "operation": "push",
-        "list": "={{ $('payload_handler').item.json.contact.phone }}_sindnei_01_msg_buffer",
+        "list": "={{ $('payload_handler').item.json.contact.phone }}_{{ $('Get Organization SETUP').item.json.name }}_msg_buffer",
         "messageData": "={{ $('payload_handler').item.json.message.text.conversation }}",
         "tail": true
       },
@@ -187,7 +187,7 @@
     {
       "parameters": {
         "operation": "push",
-        "list": "={{ $('payload_handler').item.json.contact.phone }}_sindnei_01_msg_buffer",
+        "list": "={{ $('payload_handler').item.json.contact.phone }}_{{ $('Get Organization SETUP').item.json.name }}_msg_buffer",
         "messageData": "={{ $('openai-transcribe-audio').item.json.text }}",
         "tail": true
       },
@@ -222,7 +222,7 @@
     {
       "parameters": {
         "operation": "get",
-        "key": "={{ $('payload_handler').item.json.contact.phone }}_sindnei_01_msg_buffer",
+        "key": "={{ $('payload_handler').item.json.contact.phone }}_{{ $('Get Organization SETUP').item.json.name }}_msg_buffer",
         "options": {}
       },
       "id": "199939c6-f0a5-453a-9a55-6377993f4114",
@@ -258,21 +258,9 @@
       "disabled": true
     },
     {
-      "parameters": {},
-      "id": "c83b38ff-c06c-4c71-8542-597a21cbb017",
-      "name": "Wait 5 seg",
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        3100,
-        980
-      ],
-      "webhookId": "52441967-5a76-464a-98fd-c5f7e5d90e8a"
-    },
-    {
       "parameters": {
         "operation": "get",
-        "key": "={{ $('payload_handler').item.json.contact.phone }}_sindnei_01_msg_buffer",
+        "key": "={{ $('payload_handler').item.json.contact.phone }}_{{ $('Get Organization SETUP').item.json.name }}_msg_buffer",
         "options": {}
       },
       "id": "1e9ca98e-e7b3-47d9-9111-27c8e211f540",
@@ -362,8 +350,8 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "={{ $('payload_handler').item.json.contact.phone }}_chat_memory",
-        "tableName": "n8n_chat_histories_sindnei_01",
+        "sessionKey": "={{ $('payload_handler').item.json.contact.phone }}_chat_memory_{{ $('Get Organization SETUP').item.json.name }}",
+        "tableName": "={{ $('Get Organization SETUP').item.json.chat_table_name }}",
         "contextWindowLength": 30
       },
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
@@ -376,8 +364,8 @@
       "name": "Postgres Chat Memory",
       "credentials": {
         "postgres": {
-          "id": "ZaC2FzQI2843ua9k",
-          "name": "conn-postgres-codai"
+          "id": "cz2rcBLkiWj3LOLr",
+          "name": "conn-postgres-codai-geral"
         }
       }
     },
@@ -402,7 +390,7 @@
     },
     {
       "parameters": {
-        "amount": 4
+        "amount": 2
       },
       "id": "fba47186-c516-4588-855b-f7481d92d196",
       "name": "1,2s1",
@@ -439,7 +427,7 @@
     {
       "parameters": {
         "operation": "delete",
-        "key": "={{ $('payload_handler').item.json.contact.phone }}_sindnei_01_msg_buffer"
+        "key": "={{ $('payload_handler').item.json.contact.phone }}_{{ $('Get Organization SETUP').item.json.name }}_msg_buffer"
       },
       "id": "aad49b16-fe74-4a86-a94e-a74e366f6761",
       "name": "Delete Memory",
@@ -455,38 +443,6 @@
           "name": "conn-redis-server-codai"
         }
       }
-    },
-    {
-      "parameters": {
-        "tableId": "sindnei_01_residents",
-        "fieldsUi": {
-          "fieldValues": [
-            {
-              "fieldId": "id",
-              "fieldValue": "={{ $('payload_handler').item.json.contact.phone.toNumber() }}"
-            },
-            {
-              "fieldId": "name",
-              "fieldValue": "={{ $('payload_handler').item.json.contact.fullName }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabase",
-      "typeVersion": 1,
-      "position": [
-        1640,
-        1060
-      ],
-      "id": "dc161ae5-5487-4aa6-8e73-42147a91e5d1",
-      "name": "supabase-create-lead",
-      "credentials": {
-        "supabaseApi": {
-          "id": "VsqrwGucgRNjLoIu",
-          "name": "conn-supabase-codai"
-        }
-      },
-      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -516,7 +472,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1400,
+        1460,
         900
       ],
       "id": "220bd2ee-9d1b-4e2d-afe1-74ae18a782eb",
@@ -525,7 +481,7 @@
     {
       "parameters": {
         "operation": "get",
-        "tableId": "sindnei_01_residents",
+        "tableId": "={{ $('Get Organization SETUP').item.json.resident_table }}",
         "filters": {
           "conditions": [
             {
@@ -538,7 +494,7 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        1220,
+        1300,
         900
       ],
       "id": "2456edbb-1e57-45b4-b135-19067686a5d2",
@@ -546,8 +502,8 @@
       "alwaysOutputData": true,
       "credentials": {
         "supabaseApi": {
-          "id": "VsqrwGucgRNjLoIu",
-          "name": "conn-supabase-codai"
+          "id": "tBGW7m5fVrkdNlgE",
+          "name": "conn-supabase-codai-geral"
         }
       },
       "onError": "continueRegularOutput"
@@ -573,8 +529,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        940,
-        1100
+        1020,
+        1120
       ],
       "id": "d28438e7-937a-49c3-a253-1c2ce607bddb",
       "name": "Não faz nada - Workflow"
@@ -653,9 +609,9 @@
     },
     {
       "parameters": {
-        "name": "get_cond_jardins_bresser_info",
-        "description": "Regulamento interno do condomínio, use para responder os moradore, com base nos documentos, tire as dúvidas e questionamentos sobre o condomínio.",
-        "topK": "=10"
+        "name": "get_rag_vector_infos",
+        "description": "Documentos internos, use para responder os moradores, com base nos documentos, tire as dúvidas e questionamentos sobre o condomínio.",
+        "topK": 2
       },
       "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
       "typeVersion": 1,
@@ -695,17 +651,18 @@
       "parameters": {
         "content": "## Scan Google Drive para o Banco de Dados Vetorial.",
         "height": 620,
-        "width": 2460,
+        "width": 2620,
         "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        140,
+        -20,
         1300
       ],
       "typeVersion": 1,
       "id": "bc32fec8-8e66-40e9-832c-a49da8ff521f",
-      "name": "Sticky Note6"
+      "name": "Sticky Note6",
+      "disabled": true
     },
     {
       "parameters": {
@@ -714,8 +671,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1880,
-        1500
+        1900,
+        1560
       ],
       "id": "87fb0c59-3a80-4dd4-91b5-f1a7269853cc",
       "name": "Embeddings OpenAI3",
@@ -724,7 +681,8 @@
           "id": "01FjxP3nXBoPqAZI",
           "name": "conn-openai-codai"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -733,50 +691,52 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        560,
+        620,
         1480
       ],
       "id": "aff7a5df-5df8-44b1-a29c-1de87604f85d",
-      "name": "loop-files"
+      "name": "loop-files",
+      "disabled": true
     },
     {
       "parameters": {},
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1300,
-        1340
+        800,
+        1380
       ],
       "id": "84959db2-d5a7-4e06-b3e5-1b1f8ce53bb4",
-      "name": "The End"
+      "name": "The End",
+      "disabled": true
     },
     {
       "parameters": {
         "mode": "insert",
         "tableName": {
           "__rl": true,
-          "value": "sindnei_001_docs",
-          "mode": "list",
-          "cachedResultName": "sindnei_001_docs"
+          "value": "={{ $('Get Organization SETUP - RAG').item.json.vector_rag_table }}",
+          "mode": "id"
         },
         "options": {
-          "queryName": "match_documents_sindnei_001"
+          "queryName": "={{ $('Get Organization SETUP - RAG').item.json.match_function }}"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
       "typeVersion": 1,
       "position": [
-        1940,
-        1320
+        1960,
+        1380
       ],
       "id": "fd32a87d-2a46-4e4b-8399-638d5dfe344e",
       "name": "insert-doc-into-vector-store",
       "credentials": {
         "supabaseApi": {
-          "id": "VsqrwGucgRNjLoIu",
-          "name": "conn-supabase-codai"
+          "id": "tBGW7m5fVrkdNlgE",
+          "name": "conn-supabase-codai-geral"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {},
@@ -784,10 +744,11 @@
       "name": ">>>",
       "typeVersion": 1,
       "position": [
-        2420,
+        2400,
         1720
       ],
-      "id": "0ceb65f0-05a4-4686-b98a-05616d635375"
+      "id": "0ceb65f0-05a4-4686-b98a-05616d635375",
+      "disabled": true
     },
     {
       "parameters": {
@@ -811,7 +772,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        180,
+        20,
         1480
       ],
       "id": "326e8acc-feda-4d80-8981-8809d3a71534",
@@ -833,7 +794,7 @@
       "type": "n8n-nodes-base.dateTime",
       "typeVersion": 2,
       "position": [
-        320,
+        420,
         920
       ],
       "id": "a67475fd-ead9-45b7-8af6-61dc60ab9692",
@@ -927,7 +888,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        680,
+        820,
         920
       ],
       "id": "6aee8630-7e90-41a9-8648-ac5e0fd9a45e",
@@ -1029,7 +990,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        500,
+        620,
         920
       ],
       "id": "4dc8e981-5e08-4afd-8b37-07095c1b8a5b",
@@ -1081,7 +1042,7 @@
         "promptType": "define",
         "text": "={{ $json.mensagem_completa }}",
         "options": {
-          "systemMessage": "=<setup>\nNome do morador: {{ $('payload_handler').item.json.contact.firstName }}  \nHoje é dia {{ $now.setLocale('pt-BR').format(\"EEEE, dd 'de' MMMM 'de' yyyy - HH:mm:ss\") }}.\n</setup>\n\n<easter_eggs>\nAPENAS dê informações dessa seção, se o morador perguntar sobre quem criou vc!\nVocê é o Sindney, uma inteligência artificial treinada pela CODAI com as regras, políticas e convenções do Condomínio Jardins do Bresser.\n</easter_eggs>\n\n<persona>\nSeu nome é Sindney, o síndico assistente virtual 24h do Condomínio Jardins do Bresser, localizado na Rua Ipanema, 686 - Mooca, São Paulo - SP, CEP 03164-200, telefone: (11) 2695-2249. Seu papel é guiar os moradores de forma natural e personalizada, sempre com base nas informações disponíveis na tool [get_cond_jardins_bresser_info].\n\nSeu estilo deve ser:\n- 🤝 Amigável e humanizado, como um amigo que entende o dia a dia do morador.\n- 👔 Profissional, mas sem parecer robótico.\n- ✏️ Simples e direto ao ponto, sem jargões técnicos.\n- 💬 Personalize sempre a conversa com base no que o morador disser.\n</persona>\n\n<fluxo_de_atendimento>\n1. 👋 Abertura e conexão:\n   - Cumprimente o morador pelo primeiro nome.\n   - Já no primeiro contato, incentive o uso do áudio de forma amigável:\n     - *\"Oi, [nome_morador]! Tudo bem por aí? 😊 Pode me contar como posso te ajudar! Se for mais fácil, pode mandar um áudio 🎙️ que eu te escuto e respondo rapidinho!\"*\n</fluxo_de_atendimento>\n\n<interpretacao_de_documentos>\n📋 Sempre que o morador solicitar um **resumo**, **síndico atual eleito ou reeleito**, **explicações sobre decisões**, **nome do síndico atual**, ou qualquer assunto relacionado a regras, deliberações ou funcionamento do condomínio, siga esta ordem de prioridade para consultar as informações:\n\n1️⃣ **Ata mais recente:** Sempre considere a ata mais recente como fonte principal e sempre considerando a data atual como base para buscar essa informação no documento mais atual.  \n2️⃣ **Atas anteriores:** Caso o tema não esteja mencionado na ata mais recente, consulte a ata imediatamente anterior.  \n3️⃣ **Regulamento Interno:** Se a informação não for encontrada nas atas, verifique se há orientação no regulamento interno.  \n4️⃣ **Convenção do Condomínio:** Por fim, caso não conste nas atas nem no regulamento, consulte a convenção do condomínio.\n\n🚫 Nunca misture informações antigas se o mesmo assunto já tiver sido atualizado em documentos mais recentes.  \n⚠️ Em caso de conflito entre documentos, siga esta ordem de prioridade: **ata mais recente > regulamento interno > convenção**.  \n</interpretacao_de_documentos>\n\n<instrucoes_gerais>\n🛠️ Todas as informações fornecidas devem ser extraídas exclusivamente da tool [get_cond_jardins_bresser_info].  \n⚠️ *Nunca improvise respostas*. Se algo não estiver no banco vetorial, oriente o morador a procurar o síndico oficial com gentileza no telefone do condomínio.\n\nVocê deve oferecer orientações sobre:\n- 📌 Regras internas  \n- 🏢 Uso das áreas comuns  \n- 🔧 Serviços e manutenções  \n- 📋 Atas e comunicados  \n- 🕐 Horários de funcionamento  \n- 📞 Contatos do condomínio  \n- E outros temas relacionados ao dia a dia do condomínio.\n\nCaso a pergunta **não tenha relação com o condomínio**, oriente o morador com educação e foco.  \n</instrucoes_gerais>\n\n<objetivo>\nAtuar como um síndico virtual prestativo, disponível 24h, oferecendo suporte ágil e confiável com base nas informações reais do banco vetorial.  \nRespeite sempre a privacidade dos moradores.\n</objetivo>\n\n<publico-alvo>\nExclusivamente moradores do Condomínio Jardins do Bresser.\n</publico-alvo>\n\n<escopo>\n✅ Use apenas informações da tool [get_cond_jardins_bresser_info]  \n🚫 Não responda perguntas fora do contexto do condomínio  \n📞 Oriente a procurar o síndico oficial se necessário\n</escopo>\n\n<estilo_de_comunicacao>\n- 👂 Tom acolhedor e próximo  \n- 💬 Comunicação leve e informal (como “Oi! Tudo bem?”)  \n- 🔍 Sempre seja claro e objetivo  \n- 🙌 Use emojis para dar clareza e tornar a conversa mais visual\n</estilo_de_comunicacao>\n\n<formatacao_de_mensagens>\nSempre utilize emojis para identificar e destacar as informações nas mensagens. Aqui vão algumas diretrizes:\n\n📍 Endereços  \n📞 Telefones  \n🌍 Sites  \n⏰ Horários de atendimento  \n📅 Datas e calendário  \n🚗 Carros e veículos  \n❓ Dúvidas e informações  \n✅ Confirmações  \n⚠️ Alertas ou restrições\n\n📌 **Exemplo de mensagem formatada corretamente:**  \n📍 **Endereço do condomínio:** Rua Ipanema, 686 - Mooca, São Paulo - SP, CEP 03164-200.  \n📞 **Telefone:** (11) 2695-2249  \n📅 **Data:** Segunda-feira, 11 de Março de 2025  \n⏰ **Horário de atendimento:** 8h às 17h  \n✅ **Status:** Reservado com sucesso  \n⚠️ **Importante:** O uso do salão está sujeito à taxa e regras do regulamento interno.\n\nUse sempre esse padrão para tornar a comunicação mais clara e confiável.\n</formatacao_de_mensagens>\n\n<diretrizes_eticas>\n🔒 Nunca compartilhe dados pessoais ou internos sem autorização.  \n🤫 Mantenha a confidencialidade das informações dos moradores.\n</diretrizes_eticas>\n\n<limitacoes>\n🚫 Nunca “invente” ou assuma informações fora da tool [get_cond_jardins_bresser_info]  \n🙅‍♂️ Se a resposta não for encontrada, oriente o morador com carinho a procurar o síndico oficial.  \n📅 SEMPRE que o morador quiser tirar dúvidas, leve em consideração os últimos documentos, por exemplo se ele perguntar quando foi a última assembleia, obtenha do documento com a data mais recente.\n</limitacoes>\n\n<encerramento_de_conversa>\nUse encerramentos diferentes dependendo do contexto da conversa. Evite repetir sempre a mesma frase para manter a experiência mais humana e natural. Aqui estão algumas sugestões agrupadas por tipo de situação:\n\n✅ Dúvida resolvida de forma objetiva:\n- \"Qualquer coisa, estou por aqui, viu? 😊\"\n- \"Se pintar mais alguma dúvida, é só me chamar!\"\n- \"Fico à disposição pra qualquer outra coisa.\"\n\n🧾 Quando envolver documentos ou regras:\n- \"Se quiser, posso te ajudar a encontrar isso nos documentos também.\"\n- \"Caso precise localizar essa informação em alguma ata ou regulamento, posso te mostrar como 😊\"\n\n💬 Quando a conversa for mais informal:\n- \"Me dá um alô se precisar de mais alguma coisa! 😉\"\n- \"Só chamar se quiser continuar esse papo!\"\n\n🙌 Após ajuda prática ou orientações rápidas:\n- \"Tudo certo por aí?\"\n- \"Espero ter ajudado!\"\n\n⚠️ Quando não há resposta na base de dados:\n- \"Como essa info não está na minha base, recomendo falar com o síndico oficial, tá bom? 😊\"\n- \"Isso você vai conseguir certinho com o síndico no telefone do condomínio!\"\n\n🧠 *Importante:* O encerramento **não é obrigatório** em toda mensagem. Use apenas quando fizer sentido para o tom da conversa e para manter a naturalidade.\n</encerramento_de_conversa>\n\n<passo_a_passo>\nLógica de atendimento do Sindney – Assistente Virtual do Condomínio Jardins do Bresser:\n\n1. **Recepção amigável**\n   - Cumprimente o morador pelo primeiro nome.\n   - Incentive de forma natural o uso de áudio, se for o primeiro contato.\n     - *\"Oi, [nome]! Tudo bem por aí? 😊 Se preferir, pode mandar um áudio 🎙️ que eu te escuto rapidinho!\"*\n\n2. **Identificação da solicitação**\n   - Entenda com clareza o que o morador precisa.\n   - Se necessário, peça mais detalhes de forma leve.\n   - Sempre interprete a intenção com base na conversa.\n\n3. **Busca e entrega da informação**\n   - Utilize **exclusivamente** os dados da tool [get_cond_jardins_bresser_info].\n   - Priorize documentos na seguinte ordem:\n     1. 📅 Ata mais recente\n     2. 📄 Atas anteriores\n     3. 📘 Regulamento Interno\n     4. 📙 Convenção do Condomínio\n\n4. **Resposta clara, personalizada e formatada**\n   - Use emojis para facilitar a leitura.\n   - Adapte o tom com base no estilo do morador (mais direto ou informal).\n   - Resuma a informação sem jargões ou excessos técnicos.\n\n5. **Encerramento natural**\n   - Use uma frase de encerramento de acordo com o contexto, seguindo as opções em `<encerramento_de_conversa>`.\n   - **Evite repetir** a mesma mensagem de encerramento em todas as respostas.\n   - Se a conversa estiver fluindo naturalmente, pode encerrar sem frase final.\n\n6. **Limites**\n   - Se a informação **não estiver** na tool, **não improvise**.\n   - Oriente o morador a falar com o síndico de forma educada e gentil.\n     - 📞 *\"Isso você vai conseguir certinho com o síndico pelo telefone do condomínio: (11) 2695-2249.\"*\n</passo_a_passo>"
+          "systemMessage": "=<setup>\nNome do morador: {{ $('payload_handler').item.json.contact.firstName }}  \nHoje é dia {{ $now.setLocale('pt-BR').format(\"EEEE, dd 'de' MMMM 'de' yyyy - HH:mm:ss\") }}.\n</setup>\n\n{{ $('Get Organization SETUP').item.json.prompt }}"
         }
       },
       "id": "a2862133-1224-418c-bd3a-4638eef2d1e9",
@@ -1096,7 +1057,7 @@
     {
       "parameters": {
         "resource": "messages-api",
-        "instanceName": "sindnei-ai-codai",
+        "instanceName": "={{ $('Get Organization SETUP').item.json.evolution_instance }}",
         "remoteJid": "={{ $('payload_handler').item.json.contact.phone }}",
         "messageText": "={{ $('Loop Over Items1').item.json.output }}",
         "options_message": {
@@ -1122,12 +1083,23 @@
       "parameters": {
         "tableName": {
           "__rl": true,
-          "value": "sindnei_001_docs",
-          "mode": "list",
-          "cachedResultName": "sindnei_001_docs"
+          "value": "={{ $('Get Organization SETUP').item.json.vector_rag_table }}",
+          "mode": "id"
         },
         "options": {
-          "queryName": "match_documents_sindnei_001"
+          "queryName": "={{ $('Get Organization SETUP').item.json.match_function }}",
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "organization",
+                "value": "={{ $('Get Organization SETUP').item.json.name }}"
+              },
+              {
+                "name": "bucket",
+                "value": "={{ $('Get Organization SETUP').item.json.bucket }}"
+              }
+            ]
+          }
         }
       },
       "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
@@ -1140,8 +1112,8 @@
       "name": "Supabase Vector Store1",
       "credentials": {
         "supabaseApi": {
-          "id": "VsqrwGucgRNjLoIu",
-          "name": "conn-supabase-codai"
+          "id": "tBGW7m5fVrkdNlgE",
+          "name": "conn-supabase-codai-geral"
         }
       }
     },
@@ -1166,22 +1138,6 @@
     },
     {
       "parameters": {
-        "public": true,
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
-      "typeVersion": 1.1,
-      "position": [
-        2820,
-        1520
-      ],
-      "id": "900ef6d4-8a05-4bb6-a379-3d8b143e6532",
-      "name": "When chat message received",
-      "webhookId": "3a87d9e7-9f1b-47f8-88ca-0970086f2443",
-      "disabled": true
-    },
-    {
-      "parameters": {
         "workflowId": {
           "__rl": true,
           "value": "qLGtnQwfSmjupFe0",
@@ -1191,7 +1147,9 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "file_name": "={{ $('loop-files').item.json.name }}"
+            "file_name": "={{ $('loop-files').item.json.name }}",
+            "bucket_id": "={{ $('Get Organization SETUP - RAG').item.json.bucket }}",
+            "project_id": "={{ $('Get Organization SETUP - RAG').item.json.project_id }}"
           },
           "matchingColumns": [
             "file_name"
@@ -1200,6 +1158,26 @@
             {
               "id": "file_name",
               "displayName": "file_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "bucket_id",
+              "displayName": "bucket_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "project_id",
+              "displayName": "project_id",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -1218,23 +1196,38 @@
       "typeVersion": 1.2,
       "position": [
         1480,
-        1560
+        1540
       ],
       "id": "bfaab7df-7394-4f1d-a89f-1b77147bf3a0",
-      "name": "Execute Workflow"
+      "name": "Execute Workflow",
+      "disabled": true
     },
     {
       "parameters": {
-        "options": {}
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "organization",
+                "value": "={{ $('Get Organization SETUP - RAG').item.json.name }}"
+              },
+              {
+                "name": "=bucket",
+                "value": "={{ $('Get Organization SETUP - RAG').item.json.bucket }}"
+              }
+            ]
+          }
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1,
       "position": [
-        2020,
-        1500
+        2040,
+        1560
       ],
       "id": "d79f3062-2b83-4f2e-9a6a-bacdb359bbe6",
-      "name": "Default Data Loader"
+      "name": "Default Data Loader",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1247,11 +1240,12 @@
       "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        2120,
-        1640
+        2140,
+        1700
       ],
       "id": "61c13468-7460-4c82-9dfe-097993485b4c",
-      "name": "Recursive Character Text Splitter"
+      "name": "Recursive Character Text Splitter",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1271,21 +1265,22 @@
       "typeVersion": 3.4,
       "position": [
         1680,
-        1560
+        1540
       ],
       "id": "19afc71c-d44f-4792-b9b9-8077cb3b843b",
-      "name": "Edit Fields"
+      "name": "Edit Fields",
+      "disabled": true
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT name FROM storage.objects WHERE bucket_id = 'sindnei1' AND name NOT LIKE '.%'",
+        "query": "SELECT name FROM storage.objects WHERE bucket_id = '{{ $('Get Organization SETUP - RAG').item.json.bucket }}' AND name NOT LIKE '.%'",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        360,
+        420,
         1480
       ],
       "id": "74688b65-bd57-4263-8618-dc80d8938799",
@@ -1293,14 +1288,15 @@
       "executeOnce": true,
       "credentials": {
         "postgres": {
-          "id": "ZaC2FzQI2843ua9k",
-          "name": "conn-postgres-codai"
+          "id": "cz2rcBLkiWj3LOLr",
+          "name": "conn-postgres-codai-geral"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
-        "tableId": "sindnei1_files",
+        "tableId": "={{ $('Get Organization SETUP - RAG').item.json.file_sync_table }}",
         "fieldsUi": {
           "fieldValues": [
             {
@@ -1314,21 +1310,22 @@
       "typeVersion": 1,
       "position": [
         1300,
-        1560
+        1540
       ],
       "id": "3f0952db-522b-4ae6-ba85-5cbbc13c715c",
       "name": "Supabase",
       "credentials": {
         "supabaseApi": {
-          "id": "VsqrwGucgRNjLoIu",
-          "name": "conn-supabase-codai"
+          "id": "tBGW7m5fVrkdNlgE",
+          "name": "conn-supabase-codai-geral"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
         "operation": "update",
-        "tableId": "sindnei1_files",
+        "tableId": "={{ $('Get Organization SETUP - RAG').item.json.file_sync_table}}",
         "filters": {
           "conditions": [
             {
@@ -1350,22 +1347,23 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        340,
+        460,
         1700
       ],
       "id": "a08b82c3-34bf-47d1-a04c-821422e498e4",
       "name": "Supabase1",
       "credentials": {
         "supabaseApi": {
-          "id": "VsqrwGucgRNjLoIu",
-          "name": "conn-supabase-codai"
+          "id": "tBGW7m5fVrkdNlgE",
+          "name": "conn-supabase-codai-geral"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
         "operation": "getAll",
-        "tableId": "sindnei1_files",
+        "tableId": "={{ $('Get Organization SETUP - RAG').item.json.file_sync_table}}",
         "returnAll": true,
         "filters": {
           "conditions": [
@@ -1380,8 +1378,8 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        760,
-        1580
+        800,
+        1560
       ],
       "id": "8b475a3c-109d-46e7-9666-f76ca4d9b77b",
       "name": "Supabase2",
@@ -1389,10 +1387,11 @@
       "executeOnce": true,
       "credentials": {
         "supabaseApi": {
-          "id": "VsqrwGucgRNjLoIu",
-          "name": "conn-supabase-codai"
+          "id": "tBGW7m5fVrkdNlgE",
+          "name": "conn-supabase-codai-geral"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1455,11 +1454,12 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        980,
-        1580
+        1000,
+        1560
       ],
       "id": "c509d126-d123-4bb6-88ce-9b6a4452ca7b",
-      "name": "Switch"
+      "name": "Switch",
+      "disabled": true
     },
     {
       "parameters": {},
@@ -1470,33 +1470,181 @@
         1700
       ],
       "id": "d81449ef-3442-4655-a6a5-47dfcbb2959c",
-      "name": "Próximo"
+      "name": "Próximo",
+      "disabled": true
     },
     {
       "parameters": {
-        "resource": "messages-api",
-        "instanceName": "sindnei-ai-codai",
-        "remoteJid": "=5511967362820",
-        "messageText": "={{ $json.chatInput }}",
-        "options_message": {
-          "delay": 2000
+        "operation": "get",
+        "tableId": "organization",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "name",
+              "keyValue": "={{ $json.body.body.instance }}"
+            }
+          ]
         }
       },
-      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        3000,
-        1520
+        220,
+        920
       ],
-      "id": "48bbb2fb-657b-4615-a137-fbf6c94d4984",
-      "name": "Evolution API1",
+      "id": "1d69fd04-7e06-4946-867d-7e5ab5ede5cf",
+      "name": "Get Organization SETUP",
+      "alwaysOutputData": true,
       "credentials": {
-        "evolutionApi": {
-          "id": "AFA66zDXLVtbWuS0",
-          "name": "conn-evolution-sindnei"
+        "supabaseApi": {
+          "id": "tBGW7m5fVrkdNlgE",
+          "name": "conn-supabase-codai-geral"
         }
       },
-      "disabled": true
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "organization",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "name",
+              "keyValue": "=sindney-0"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        220,
+        1480
+      ],
+      "id": "65a142ff-4a2c-44de-8649-af3bfef8c2f0",
+      "name": "Get Organization SETUP - RAG",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "tBGW7m5fVrkdNlgE",
+          "name": "conn-supabase-codai-geral"
+        }
+      },
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "tableId": "={{ $('Get Organization SETUP').item.json.resident_table }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "id",
+              "fieldValue": "={{ $('payload_handler').item.json.contact.phone.toNumber() }}"
+            },
+            {
+              "fieldId": "name",
+              "fieldValue": "={{ $('payload_handler').item.json.contact.fullName }}"
+            },
+            {
+              "fieldId": "organization",
+              "fieldValue": "={{ $('Get Organization SETUP').item.json.name }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        1060
+      ],
+      "id": "dc161ae5-5487-4aa6-8e73-42147a91e5d1",
+      "name": "supabase-create-resident",
+      "credentials": {
+        "supabaseApi": {
+          "id": "tBGW7m5fVrkdNlgE",
+          "name": "conn-supabase-codai-geral"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {},
+      "id": "c83b38ff-c06c-4c71-8542-597a21cbb017",
+      "name": "Wait 2 seg",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3100,
+        980
+      ],
+      "webhookId": "52441967-5a76-464a-98fd-c5f7e5d90e8a"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "garage_sindney",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "garage_number",
+              "keyValue": "={{ $fromAI('garage_number', `parking space number`, 'string') }}"
+            },
+            {
+              "keyName": "organization",
+              "keyValue": "={{ $('Get Organization SETUP').item.json.name }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        4520,
+        1320
+      ],
+      "id": "f589dc92-3d5f-4025-8dfe-72c218890dd8",
+      "name": "get_apto_by_garage_number",
+      "credentials": {
+        "supabaseApi": {
+          "id": "tBGW7m5fVrkdNlgE",
+          "name": "conn-supabase-codai-geral"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "garage_sindney",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "apto",
+              "keyValue": "={{ $fromAI('apto_number', `apartment number`, 'string') }}"
+            },
+            {
+              "keyName": "organization",
+              "keyValue": "={{ $('Get Organization SETUP').item.json.name }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        4700,
+        1320
+      ],
+      "id": "229cd911-54db-4c9a-8124-4ad3ad78de9c",
+      "name": "get_garage_by_apto_number",
+      "credentials": {
+        "supabaseApi": {
+          "id": "tBGW7m5fVrkdNlgE",
+          "name": "conn-supabase-codai-geral"
+        }
+      }
     }
   ],
   "connections": {
@@ -1504,7 +1652,7 @@
       "main": [
         [
           {
-            "node": "Date & Time",
+            "node": "Get Organization SETUP",
             "type": "main",
             "index": 0
           }
@@ -1584,22 +1732,11 @@
         ]
       ]
     },
-    "Wait 5 seg": {
-      "main": [
-        [
-          {
-            "node": "Get Memory 2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Get Memory 1": {
       "main": [
         [
           {
-            "node": "Wait 5 seg",
+            "node": "Wait 2 seg",
             "type": "main",
             "index": 0
           }
@@ -1672,17 +1809,6 @@
         ]
       ]
     },
-    "supabase-create-lead": {
-      "main": [
-        [
-          {
-            "node": "message-type",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "if-existing-lead": {
       "main": [
         [
@@ -1694,7 +1820,7 @@
         ],
         [
           {
-            "node": "supabase-create-lead",
+            "node": "supabase-create-resident",
             "type": "main",
             "index": 0
           }
@@ -1840,7 +1966,7 @@
       "main": [
         [
           {
-            "node": "Postgres",
+            "node": "Get Organization SETUP - RAG",
             "type": "main",
             "index": 0
           }
@@ -1955,17 +2081,6 @@
           {
             "node": "Supabase Vector Store1",
             "type": "ai_embedding",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "When chat message received": {
-      "main": [
-        [
-          {
-            "node": "Evolution API1",
-            "type": "main",
             "index": 0
           }
         ]
@@ -2087,6 +2202,72 @@
           }
         ]
       ]
+    },
+    "Get Organization SETUP": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Organization SETUP - RAG": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "supabase-create-resident": {
+      "main": [
+        [
+          {
+            "node": "message-type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 2 seg": {
+      "main": [
+        [
+          {
+            "node": "Get Memory 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_apto_by_garage_number": {
+      "ai_tool": [
+        [
+          {
+            "node": "sindnei-agent-ai",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_garage_by_apto_number": {
+      "ai_tool": [
+        [
+          {
+            "node": "sindnei-agent-ai",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -2101,7 +2282,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "a510d590-f5c6-4611-9994-ff83d16af50d",
+  "versionId": "18663385-afcd-45aa-ad5e-30528aced0f2",
   "triggerCount": 1,
   "tags": [
     {
