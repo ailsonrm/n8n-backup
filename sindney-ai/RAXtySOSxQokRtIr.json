@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-03-30T03:06:54.996Z",
-  "updatedAt": "2025-04-03T20:26:55.873Z",
+  "updatedAt": "2025-04-15T22:44:03.614Z",
   "id": "RAXtySOSxQokRtIr",
   "name": "Project | Sindnei-AI | Router",
   "active": true,
@@ -8,7 +8,7 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "sindnei-ai-router",
+        "path": "sindney-ai-router",
         "options": {}
       },
       "type": "n8n-nodes-base.webhook",
@@ -33,7 +33,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -700,
+        -840,
         -180
       ],
       "id": "42ac05b7-8acc-4b47-8a31-37de3e7a351a",
@@ -52,7 +52,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -700,
+        -840,
         20
       ],
       "id": "5bedde85-c03a-4083-b45b-3431c8ee6f06",
@@ -90,7 +90,7 @@
   "staticData": null,
   "meta": null,
   "pinData": {},
-  "versionId": "0919d918-90eb-42d8-8fe6-8a000fba4278",
+  "versionId": "2dc2a310-fa2d-4e8d-aef8-3109c72c5a3b",
   "triggerCount": 1,
   "tags": [
     {
