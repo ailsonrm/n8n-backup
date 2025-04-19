@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-03-30T03:14:07.600Z",
-  "updatedAt": "2025-04-16T18:44:46.567Z",
+  "updatedAt": "2025-04-19T13:20:44.822Z",
   "id": "bGA3U8Eelf0KA3S0",
   "name": "Project | Sindney-AI | CXA",
   "active": true,
@@ -15,7 +15,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         -20,
-        820
+        840
       ],
       "typeVersion": 1,
       "id": "bd0dd800-2f15-4534-bcdc-0dfcff224157",
@@ -25,14 +25,14 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "sindnei-ai",
+        "path": "sindney-ai-cxa",
         "options": {}
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        20,
-        920
+        -260,
+        180
       ],
       "id": "30c21d0f-94f5-4946-905a-63a11e319484",
       "name": "Webhook",
@@ -1650,13 +1650,7 @@
   "connections": {
     "Webhook": {
       "main": [
-        [
-          {
-            "node": "Get Organization SETUP",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "message-type": {
@@ -2282,7 +2276,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "18663385-afcd-45aa-ad5e-30528aced0f2",
+  "versionId": "b1f94c2e-2e5a-40b5-8815-3253afb868cf",
   "triggerCount": 1,
   "tags": [
     {
