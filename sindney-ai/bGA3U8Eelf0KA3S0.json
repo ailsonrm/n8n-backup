@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-03-30T03:14:07.600Z",
-  "updatedAt": "2025-04-19T13:20:44.822Z",
+  "updatedAt": "2025-04-20T03:41:40.301Z",
   "id": "bGA3U8Eelf0KA3S0",
   "name": "Project | Sindney-AI | CXA",
   "active": true,
@@ -31,8 +31,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -260,
-        180
+        40,
+        920
       ],
       "id": "30c21d0f-94f5-4946-905a-63a11e319484",
       "name": "Webhook",
@@ -158,7 +158,7 @@
       "credentials": {
         "openAiApi": {
           "id": "01FjxP3nXBoPqAZI",
-          "name": "conn-openai-codai"
+          "name": "conn-openai-codai-geral"
         }
       }
     },
@@ -180,7 +180,7 @@
       "credentials": {
         "redis": {
           "id": "V7I628KPjYoW7zjF",
-          "name": "conn-redis-server-codai"
+          "name": "conn-redis-codai-geral"
         }
       }
     },
@@ -202,7 +202,7 @@
       "credentials": {
         "redis": {
           "id": "V7I628KPjYoW7zjF",
-          "name": "conn-redis-server-codai"
+          "name": "conn-redis-codai-geral"
         }
       }
     },
@@ -215,8 +215,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3900,
-        880
+        3440,
+        640
       ]
     },
     {
@@ -236,7 +236,7 @@
       "credentials": {
         "redis": {
           "id": "V7I628KPjYoW7zjF",
-          "name": "conn-redis-server-codai"
+          "name": "conn-redis-codai-geral"
         }
       }
     },
@@ -274,7 +274,7 @@
       "credentials": {
         "redis": {
           "id": "V7I628KPjYoW7zjF",
-          "name": "conn-redis-server-codai"
+          "name": "conn-redis-codai-geral"
         }
       }
     },
@@ -343,7 +343,7 @@
       "credentials": {
         "openAiApi": {
           "id": "01FjxP3nXBoPqAZI",
-          "name": "conn-openai-codai"
+          "name": "conn-openai-codai-geral"
         }
       }
     },
@@ -384,7 +384,7 @@
       "credentials": {
         "openAiApi": {
           "id": "01FjxP3nXBoPqAZI",
-          "name": "conn-openai-codai"
+          "name": "conn-openai-codai-geral"
         }
       }
     },
@@ -440,7 +440,7 @@
       "credentials": {
         "redis": {
           "id": "V7I628KPjYoW7zjF",
-          "name": "conn-redis-server-codai"
+          "name": "conn-redis-codai-geral"
         }
       }
     },
@@ -643,7 +643,7 @@
       "credentials": {
         "openAiApi": {
           "id": "01FjxP3nXBoPqAZI",
-          "name": "conn-openai-codai"
+          "name": "conn-openai-codai-geral"
         }
       }
     },
@@ -679,7 +679,7 @@
       "credentials": {
         "openAiApi": {
           "id": "01FjxP3nXBoPqAZI",
-          "name": "conn-openai-codai"
+          "name": "conn-openai-codai-geral"
         }
       },
       "disabled": true
@@ -1040,9 +1040,9 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "={{ $json.mensagem_completa }}",
+        "text": "={{ $('Code').item.json.mensagem_completa }}",
         "options": {
-          "systemMessage": "=<setup>\nNome do morador: {{ $('payload_handler').item.json.contact.firstName }}  \nHoje é dia {{ $now.setLocale('pt-BR').format(\"EEEE, dd 'de' MMMM 'de' yyyy - HH:mm:ss\") }}.\n</setup>\n\n{{ $('Get Organization SETUP').item.json.prompt }}"
+          "systemMessage": "={{ $json.instrucao }}\n\n<setup>\nNome do morador: {{ $('payload_handler').item.json.contact.firstName }}  \nHoje é dia {{ $now.setLocale('pt-BR').format(\"EEEE, dd 'de' MMMM 'de' yyyy - HH:mm:ss\") }}.\n</setup>\n\n{{ $('Get Organization SETUP').item.json.prompt }}"
         }
       },
       "id": "a2862133-1224-418c-bd3a-4638eef2d1e9",
@@ -1050,16 +1050,16 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.6,
       "position": [
-        4120,
-        960
+        4100,
+        880
       ]
     },
     {
       "parameters": {
         "resource": "messages-api",
         "instanceName": "={{ $('Get Organization SETUP').item.json.evolution_instance }}",
-        "remoteJid": "={{ $('payload_handler').item.json.contact.phone }}",
-        "messageText": "={{ $('Loop Over Items1').item.json.output }}",
+        "remoteJid": "={{ $('Webhook').item.json.body.body.data.key.remoteJid.split('@')[0] }}",
+        "messageText": "={{ $json.output }}",
         "options_message": {
           "delay": 2000
         }
@@ -1068,14 +1068,14 @@
       "typeVersion": 1,
       "position": [
         5280,
-        1020
+        1040
       ],
       "id": "de21e9b5-0afc-4d42-a5ad-246b2407b184",
       "name": "Evolution API",
       "credentials": {
         "evolutionApi": {
           "id": "AFA66zDXLVtbWuS0",
-          "name": "conn-evolution-sindnei"
+          "name": "conn-evolution-codai-geral"
         }
       }
     },
@@ -1132,7 +1132,7 @@
       "credentials": {
         "openAiApi": {
           "id": "01FjxP3nXBoPqAZI",
-          "name": "conn-openai-codai"
+          "name": "conn-openai-codai-geral"
         }
       }
     },
@@ -1602,7 +1602,7 @@
       "type": "n8n-nodes-base.supabaseTool",
       "typeVersion": 1,
       "position": [
-        4520,
+        4640,
         1320
       ],
       "id": "f589dc92-3d5f-4025-8dfe-72c218890dd8",
@@ -1634,8 +1634,8 @@
       "type": "n8n-nodes-base.supabaseTool",
       "typeVersion": 1,
       "position": [
-        4700,
-        1320
+        4840,
+        1340
       ],
       "id": "229cd911-54db-4c9a-8124-4ad3ad78de9c",
       "name": "get_garage_by_apto_number",
@@ -1645,12 +1645,157 @@
           "name": "conn-supabase-codai-geral"
         }
       }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.mensagem_completa }}",
+        "options": {
+          "systemMessage": "=<setup>\nNome do morador: {{ $('payload_handler').item.json.contact.firstName }}  \nHoje é dia {{ $now.setLocale('pt-BR').format(\"EEEE, dd 'de' MMMM 'de' yyyy - HH:mm:ss\") }}.\n</setup>\n\n{{ $('Get Organization SETUP').item.json.prompt }}"
+        }
+      },
+      "id": "bfdc2297-d031-4dd7-95ed-254beec97951",
+      "name": "sindnei-agent-ai1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        0,
+        0
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.mensagem_completa }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "duvidas_condominio",
+              "description": "Quando a pessoa perguntar coisas relacionadas ao condominio, regras, atas, cargos, regulamentos e vagas de garagem"
+            },
+            {
+              "category": "duvidas_modulocker",
+              "description": "Quando a pessoa perguntar coisas relacionadas ao MODULOCKER, solução de smart locker (armário intelignete), recebimento,\nretirada e armazenamento seguro de encomendas e pertences\ndos usuários."
+            }
+          ]
+        },
+        "options": {
+          "fallback": "other"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1,
+      "position": [
+        3540,
+        440
+      ],
+      "id": "a1e1bafd-435d-4c8e-8ce3-80a34f2990bf",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3660,
+        700
+      ],
+      "id": "9471f74c-c946-477e-bbce-b2dde9bab52d",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "01FjxP3nXBoPqAZI",
+          "name": "conn-openai-codai-geral"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "06bad7d3-190c-4501-97b9-206621389438",
+              "name": "instrucao",
+              "value": "<instruction>\nDê informações e responda dúvidas sobre o condomínio\n</instruction>",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3940,
+        360
+      ],
+      "id": "8bf04447-ad46-4049-9a20-fdcc2ef076c5",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "06bad7d3-190c-4501-97b9-206621389438",
+              "name": "instrucao",
+              "value": "<instruction>\nDê informações e responda dúvidas sobre a solução Modulocker, smart locker\n</instruction>",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3940,
+        520
+      ],
+      "id": "93c7ea15-10ab-4545-9c06-42534193867b",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "06bad7d3-190c-4501-97b9-206621389438",
+              "name": "instrucao",
+              "value": "<instruction>\nSiga a conversa normalmente\n</instruction>",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3880,
+        680
+      ],
+      "id": "baaadc09-d69f-4ef3-9bad-3235e7b75604",
+      "name": "Edit Fields3"
     }
   ],
   "connections": {
     "Webhook": {
       "main": [
-        []
+        [
+          {
+            "node": "Get Organization SETUP",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "message-type": {
@@ -1708,7 +1853,7 @@
       "main": [
         [
           {
-            "node": "sindnei-agent-ai",
+            "node": "Text Classifier",
             "type": "main",
             "index": 0
           }
@@ -2262,6 +2407,80 @@
           }
         ]
       ]
+    },
+    "sindnei-agent-ai1": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "sindnei-agent-ai",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "sindnei-agent-ai",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "sindnei-agent-ai",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -2276,7 +2495,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "b1f94c2e-2e5a-40b5-8815-3253afb868cf",
+  "versionId": "9e1fd4d6-a6dd-4cf6-a4d0-8f35760d7818",
   "triggerCount": 1,
   "tags": [
     {
