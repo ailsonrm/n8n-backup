@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-15T22:12:55.747Z",
-  "updatedAt": "2025-04-19T09:55:20.622Z",
+  "updatedAt": "2025-04-20T02:19:12.744Z",
   "id": "tX4deSSDPbpBgmBZ",
   "name": "Project | CODAI | RAG",
   "active": false,
@@ -36,7 +36,7 @@
       "credentials": {
         "openAiApi": {
           "id": "01FjxP3nXBoPqAZI",
-          "name": "conn-openai-codai"
+          "name": "conn-openai-codai-geral"
         }
       }
     },
@@ -240,7 +240,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT\n  name\nFROM\n    storage.objects\nWHERE\n  bucket_id = '{{ $('Get Organization SETUP - RAG').item.json.bucket }}'\nAND name NOT LIKE '.%'\nORDER BY CAST(SPLIT_PART(name, '_', 1) AS INTEGER) ASC",
+        "query": "SELECT\n  name\nFROM\n    storage.objects\nWHERE\n  bucket_id = '{{ $('Get Organization SETUP - RAG').item.json.bucket }}'\nAND name NOT LIKE '.%'",
         "options": {}
       },
       "type": "n8n-nodes-base.postgres",
@@ -713,7 +713,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "42c3e244-0575-45d4-98d2-bf430047f27b",
+  "versionId": "f5d797e0-ba19-45c4-8793-bd60ae68ada0",
   "triggerCount": 0,
   "tags": [
     {
