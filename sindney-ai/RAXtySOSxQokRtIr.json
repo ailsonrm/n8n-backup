@@ -1,8 +1,8 @@
 {
   "createdAt": "2025-03-30T03:06:54.996Z",
-  "updatedAt": "2025-04-19T13:19:29.842Z",
+  "updatedAt": "2025-04-19T23:44:29.964Z",
   "id": "RAXtySOSxQokRtIr",
-  "name": "Project | Sindnei-AI | Router",
+  "name": "Project | Sindney-AI | Router",
   "active": true,
   "nodes": [
     {
@@ -15,7 +15,7 @@
       "typeVersion": 2,
       "position": [
         -1060,
-        20
+        -20
       ],
       "id": "8869c9d0-5513-4b2c-bb1d-679bf3609bff",
       "name": "Webhook",
@@ -24,7 +24,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://n8n-main.codai.dev.br/webhook-test/sindnei-ai",
+        "url": "https://n8n-main.codai.dev.br/webhook-test/sindney-ai-cxa",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={{ $json }}",
@@ -34,7 +34,7 @@
       "typeVersion": 4.2,
       "position": [
         -840,
-        120
+        -120
       ],
       "id": "42ac05b7-8acc-4b47-8a31-37de3e7a351a",
       "name": "Sindnei-AI Dev",
@@ -43,7 +43,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://n8n-hook.codai.dev.br/webhook/sindney-ai-cxa",
+        "url": "https://n8n-main.codai.dev.br/webhook/sindney-ai-cxa",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={{ $json }}",
@@ -53,7 +53,7 @@
       "typeVersion": 4.2,
       "position": [
         -840,
-        -80
+        80
       ],
       "id": "5bedde85-c03a-4083-b45b-3431c8ee6f06",
       "name": "Sindnei-AI Prod",
@@ -91,7 +91,7 @@
   "staticData": null,
   "meta": null,
   "pinData": {},
-  "versionId": "a2881b0f-b4fa-4cb3-92c7-e0ba4403abbc",
+  "versionId": "f34e597b-7b42-4f8d-a6ab-96ea5807acde",
   "triggerCount": 1,
   "tags": [
     {
