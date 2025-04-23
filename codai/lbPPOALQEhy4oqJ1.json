@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-22T18:13:47.861Z",
-  "updatedAt": "2025-04-22T18:33:34.512Z",
+  "updatedAt": "2025-04-22T18:34:11.452Z",
   "id": "lbPPOALQEhy4oqJ1",
   "name": "Backup",
   "active": true,
@@ -19,7 +19,7 @@
       "typeVersion": 1.2,
       "position": [
         -260,
-        120
+        200
       ],
       "id": "0717f1c9-31b6-4967-b1cc-27544960ee5c",
       "name": "schedule-todo-dia-1h-da-manha"
@@ -31,7 +31,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        0,
+        -40,
         0
       ],
       "id": "b8f0a8d9-0c48-4b36-b568-180f89b33b3c",
@@ -50,8 +50,8 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        0,
-        220
+        -40,
+        200
       ],
       "id": "a8e015c4-21f8-47e8-8aee-c3ba1cbd9ea9",
       "name": "Dump Evolution postgres VPS",
@@ -75,7 +75,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        220,
+        180,
         0
       ],
       "id": "8583db93-c13b-4386-b837-6cdc0390f7c5",
@@ -101,8 +101,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        220,
-        220
+        180,
+        200
       ],
       "id": "4ffac159-5424-4c31-9cc4-8cc2b1dba379",
       "name": "E-mail Backup Evolution - Ok!1",
@@ -135,8 +135,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        0,
-        540
+        -40,
+        400
       ],
       "id": "936eb50c-6ad7-4293-8962-348a3c86bfcf",
       "name": "Execute Workflow - Backup GitHub"
@@ -199,7 +199,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "1d01a0e9-3d67-489b-a140-775e0ff3ff03",
+  "versionId": "0e0a1ee2-142c-4da8-a2fd-fc3ece8bdc17",
   "triggerCount": 1,
   "tags": [
     {
