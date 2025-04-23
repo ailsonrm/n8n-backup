@@ -1,8 +1,8 @@
 {
   "createdAt": "2025-04-20T12:47:14.466Z",
-  "updatedAt": "2025-04-22T15:52:22.622Z",
+  "updatedAt": "2025-04-23T14:28:27.067Z",
   "id": "D8efcVy9VHk4uT1y",
-  "name": "Project | Vaal-AI | Agenda Sheet",
+  "name": "Vaal-AI | Agenda Sheet",
   "active": false,
   "nodes": [
     {
@@ -673,7 +673,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "4b336b74-613c-4d2f-9e4a-b46df1700d4f",
+  "versionId": "747f05fa-85c3-4a61-bf61-b98007aafc3f",
   "triggerCount": 0,
   "tags": [
     {
