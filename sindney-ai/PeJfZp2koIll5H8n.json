@@ -1,8 +1,8 @@
 {
   "createdAt": "2025-04-20T13:20:32.990Z",
-  "updatedAt": "2025-04-22T23:57:08.108Z",
+  "updatedAt": "2025-04-23T14:27:11.368Z",
   "id": "PeJfZp2koIll5H8n",
-  "name": "Project | Sindney-AI | CXA",
+  "name": "Sindney-AI | CXA",
   "active": true,
   "nodes": [
     {
@@ -335,7 +335,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1,
       "position": [
-        5400,
+        5380,
         1020
       ],
       "id": "593cdb3c-9486-44c3-932b-dfc59af390d0",
@@ -357,8 +357,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        5560,
-        1040
+        5540,
+        1020
       ],
       "id": "30d1f7b5-1f02-416e-aa46-82c613a4dff1",
       "name": "Postgres Chat Memory",
@@ -621,7 +621,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        5740,
+        5760,
         1480
       ],
       "id": "1452f262-fca7-4890-9417-3475f7c134d7",
@@ -921,7 +921,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.6,
       "position": [
-        5400,
+        5460,
         820
       ]
     },
@@ -970,7 +970,7 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        5560,
+        5600,
         1480
       ],
       "id": "387912b7-8f76-403c-b08a-7b902fb620f9",
@@ -1081,7 +1081,7 @@
       "typeVersion": 1,
       "position": [
         6060,
-        1360
+        1420
       ],
       "id": "c1da51a9-5509-4239-8f74-70fd2367ff92",
       "name": "get_apto_by_garage_number",
@@ -1112,8 +1112,8 @@
       "type": "n8n-nodes-base.supabaseTool",
       "typeVersion": 1,
       "position": [
-        6280,
-        1360
+        6260,
+        1420
       ],
       "id": "390080bf-9cc0-46cc-8c55-b8e82d85839d",
       "name": "get_garage_by_apto_number",
@@ -1344,8 +1344,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        7940,
-        740
+        7740,
+        360
       ],
       "id": "c102b9ad-2b92-4533-9322-77fcfbbcd9ac",
       "name": "HTTP Request",
@@ -1372,11 +1372,12 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        8320,
-        480
+        7740,
+        160
       ],
       "id": "361af4c9-a694-435f-9252-c54cd94ba5fe",
-      "name": "HTTP Request1"
+      "name": "HTTP Request1",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1413,8 +1414,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        7260,
-        500
+        7040,
+        420
       ],
       "id": "ea16eebc-1887-4bd1-be8a-ff920c5fd8d5",
       "name": "OpenAI Chat Model2",
@@ -1423,7 +1424,8 @@
           "id": "di9H6klhz4rejAkz",
           "name": "conn-open-ai-codai"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1456,11 +1458,12 @@
       "type": "@n8n/n8n-nodes-langchain.informationExtractor",
       "typeVersion": 1,
       "position": [
-        7640,
-        220
+        7380,
+        160
       ],
       "id": "b91689f4-283c-40db-99fb-2b93caa20c09",
-      "name": "Information Extractor"
+      "name": "Information Extractor",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1474,8 +1477,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        7700,
-        200
+        7480,
+        340
       ],
       "id": "2fc0326a-1de5-49a8-b70c-d0b29ea1d603",
       "name": "OpenAI Chat Model3",
@@ -1484,7 +1487,8 @@
           "id": "di9H6klhz4rejAkz",
           "name": "conn-open-ai-codai"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1506,11 +1510,12 @@
       "type": "@n8n/n8n-nodes-langchain.textClassifier",
       "typeVersion": 1,
       "position": [
-        7180,
-        340
+        6940,
+        220
       ],
       "id": "677c479e-03e7-4c7a-aa88-4c8120f1dd92",
-      "name": "Text Classifier2"
+      "name": "Text Classifier2",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1520,11 +1525,12 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        8060,
-        320
+        7740,
+        -20
       ],
       "id": "e039df66-e727-465b-9c60-11fb2d09c1f1",
-      "name": "HTTP Request2"
+      "name": "HTTP Request2",
+      "disabled": true
     }
   ],
   "connections": {
@@ -2061,6 +2067,16 @@
             "node": "HTTP Request2",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -2090,13 +2106,7 @@
     },
     "HTTP Request2": {
       "main": [
-        [
-          {
-            "node": "HTTP Request1",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     }
   },
@@ -2108,7 +2118,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "6d1475e4-56d1-4023-a666-8557fad43f25",
+  "versionId": "c6b96d0d-125f-4cfd-8c41-dba3874ffbcd",
   "triggerCount": 1,
   "tags": [
     {
