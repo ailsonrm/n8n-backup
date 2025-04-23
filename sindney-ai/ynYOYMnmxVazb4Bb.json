@@ -1,8 +1,8 @@
 {
   "createdAt": "2025-04-20T13:18:47.032Z",
-  "updatedAt": "2025-04-21T15:24:32.183Z",
+  "updatedAt": "2025-04-23T14:28:50.170Z",
   "id": "ynYOYMnmxVazb4Bb",
-  "name": "Project | Sindney-AI | Router",
+  "name": "Sindney-AI | Router",
   "active": true,
   "nodes": [
     {
@@ -85,7 +85,7 @@
   "staticData": null,
   "meta": null,
   "pinData": {},
-  "versionId": "1825b43e-8d73-4325-bbdd-c91829bdc650",
+  "versionId": "4adea0c4-e3c0-432b-9833-ebbd7a815cc8",
   "triggerCount": 1,
   "tags": [
     {
