@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-22T18:22:15.318Z",
-  "updatedAt": "2025-04-22T18:32:40.317Z",
+  "updatedAt": "2025-04-22T19:07:36.559Z",
   "id": "R6lfvCIu2ugX9T2i",
   "name": "Backup | N8n | GitHub",
   "active": false,
@@ -26,7 +26,7 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        360,
+        400,
         -20
       ],
       "id": "48aa9b75-7099-4cc0-b660-e03cf9840d11",
@@ -49,7 +49,7 @@
       "type": "n8n-nodes-base.n8n",
       "typeVersion": 1,
       "position": [
-        100,
+        180,
         80
       ],
       "id": "025018e7-6cf3-491f-a6ed-263c1263cd2e",
@@ -84,7 +84,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -80,
+        -40,
         80
       ],
       "id": "ce50c195-ea6d-4898-8a21-2f2b3d2d0e33",
@@ -107,7 +107,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        360,
+        620,
         180
       ],
       "id": "b0b39eab-2954-411d-b8f9-3cb1125239f9",
@@ -121,7 +121,7 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        560,
+        620,
         -20
       ],
       "id": "a4d229e0-4f2b-4558-a31a-859ec14854a7",
@@ -143,8 +143,8 @@
       "type": "n8n-nodes-base.compareDatasets",
       "typeVersion": 2.3,
       "position": [
-        760,
-        120
+        840,
+        59
       ],
       "id": "505ad238-b369-454f-97bd-f168df7727ed",
       "name": "Compare Datasets"
@@ -170,8 +170,8 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        1460,
-        420
+        1500,
+        180
       ],
       "id": "c1ec1975-3b18-4eca-978b-fb83f264fe05",
       "name": "GitHub Create File",
@@ -205,8 +205,8 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        1460,
-        240
+        1500,
+        -20
       ],
       "id": "16481594-379e-4531-ad4d-2bdb728f2afc",
       "name": "GitHub Edit File",
@@ -230,8 +230,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        1260,
-        240
+        1280,
+        -20
       ],
       "id": "c0165373-82c5-471b-9cb4-00526cc6e595",
       "name": "Convert to File Edit"
@@ -248,8 +248,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        1260,
-        420
+        1280,
+        180
       ],
       "id": "75329d9e-aae8-4c46-afc6-5c9981498c74",
       "name": "Convert to File Create"
@@ -264,7 +264,7 @@
       "typeVersion": 3.4,
       "position": [
         1060,
-        240
+        -20
       ],
       "id": "275dc873-3f4b-4731-84f3-03a2c1a69cca",
       "name": "Workflow to Edit"
@@ -279,7 +279,7 @@
       "typeVersion": 3.4,
       "position": [
         1060,
-        420
+        180
       ],
       "id": "c6359291-8b18-4f25-b715-b424a4aff4db",
       "name": "Workflow to Create"
@@ -297,8 +297,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1880,
-        340
+        1940,
+        80
       ],
       "id": "8b47be8b-a40c-403e-8d20-c2c556c6d735",
       "name": "E-mail Backup N8n - Workflow's - Ok!",
@@ -319,8 +319,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3,
       "position": [
-        1680,
-        340
+        1720,
+        80
       ],
       "id": "6c4f1242-955f-4d05-997e-123ad479ea45",
       "name": "Merge",
@@ -519,7 +519,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "350cedfa-e9e3-4783-921f-237a42e88695",
+  "versionId": "e0109ec1-bd00-4370-9473-a03548b982e1",
   "triggerCount": 0,
   "tags": [
     {
