@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-20T12:47:14.466Z",
-  "updatedAt": "2025-04-23T14:28:27.067Z",
+  "updatedAt": "2025-04-28T15:42:20.533Z",
   "id": "D8efcVy9VHk4uT1y",
   "name": "Vaal-AI | Agenda Sheet",
   "active": false,
@@ -197,25 +197,37 @@
             "STATUS": "AGENDADO",
             "DIA": "={{ $json.dia }}",
             "HORA": "={{ $json.hora }}",
-            "PRE_VENDA": "VAAL - AI",
+            "PRE_VENDA": "VAAL - IA",
             "DIA_SEMANA": "={{ $json.dia_semana }}",
             "CLIENTE": "={{ $json.cliente }}",
             "CARRO": "={{ $json.carro }}",
-            "UNIDADE": "={{ $json.unidade }}"
+            "UNIDADE": "={{ $json.unidade }}",
+            "DATA_PRIMEIRO_CONTATO": "={{ $now.setZone('America/Sao_Paulo').format('dd/MM/yyyy') }}",
+            "HORA_PRIMEIRO_CONTATO": "={{ $now.setZone('America/Sao_Paulo').format('HH:mm') }}"
           },
           "matchingColumns": [
             "TELEFONE"
           ],
           "schema": [
             {
-              "id": "FOLLOW_UP",
-              "displayName": "FOLLOW_UP",
+              "id": "DATA_PRIMEIRO_CONTATO",
+              "displayName": "DATA_PRIMEIRO_CONTATO",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true,
-              "removed": true
+              "removed": false
+            },
+            {
+              "id": "HORA_PRIMEIRO_CONTATO",
+              "displayName": "HORA_PRIMEIRO_CONTATO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
               "id": "DIA",
@@ -411,8 +423,18 @@
           ],
           "schema": [
             {
-              "id": "FOLLOW_UP",
-              "displayName": "FOLLOW_UP",
+              "id": "DATA_PRIMEIRO_CONTATO",
+              "displayName": "DATA_PRIMEIRO_CONTATO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "HORA_PRIMEIRO_CONTATO",
+              "displayName": "HORA_PRIMEIRO_CONTATO",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -673,7 +695,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "747f05fa-85c3-4a61-bf61-b98007aafc3f",
+  "versionId": "12d509d8-fe5a-4d0e-a7b2-80cedf1d6cef",
   "triggerCount": 0,
   "tags": [
     {
