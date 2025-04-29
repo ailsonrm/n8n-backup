@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-20T12:55:59.244Z",
-  "updatedAt": "2025-04-23T14:28:10.734Z",
+  "updatedAt": "2025-04-28T15:41:38.524Z",
   "id": "TLgJQ8i0TToxHPp6",
   "name": "Vaal-AI | SDR",
   "active": true,
@@ -633,8 +633,18 @@
           ],
           "schema": [
             {
-              "id": "FOLLOW_UP",
-              "displayName": "FOLLOW_UP",
+              "id": "DATA_PRIMEIRO_CONTATO",
+              "displayName": "DATA_PRIMEIRO_CONTATO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "HORA_PRIMEIRO_CONTATO",
+              "displayName": "HORA_PRIMEIRO_CONTATO",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -1405,21 +1415,33 @@
             "TELEFONE": "={{ $('payload_handler').item.json.data.phone }}",
             "CLIENTE": "={{ $('payload_handler').item.json.data.fullName }}",
             "PRE_VENDA": "VAAL - IA",
-            "STATUS": "QUALIFICACAO"
+            "STATUS": "QUALIFICACAO",
+            "DATA_PRIMEIRO_CONTATO": "={{ $now.setZone('America/Sao_Paulo').format('dd/MM/yyyy') }}",
+            "HORA_PRIMEIRO_CONTATO": "={{ $now.setZone('America/Sao_Paulo').format('HH:mm') }}"
           },
           "matchingColumns": [
             "TELEFONE"
           ],
           "schema": [
             {
-              "id": "FOLLOW_UP",
-              "displayName": "FOLLOW_UP",
+              "id": "DATA_PRIMEIRO_CONTATO",
+              "displayName": "DATA_PRIMEIRO_CONTATO",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true,
-              "removed": true
+              "removed": false
+            },
+            {
+              "id": "HORA_PRIMEIRO_CONTATO",
+              "displayName": "HORA_PRIMEIRO_CONTATO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
               "id": "DIA",
@@ -2259,8 +2281,18 @@
           ],
           "schema": [
             {
-              "id": "FOLLOW_UP",
-              "displayName": "FOLLOW_UP",
+              "id": "DATA_PRIMEIRO_CONTATO",
+              "displayName": "DATA_PRIMEIRO_CONTATO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "HORA_PRIMEIRO_CONTATO",
+              "displayName": "HORA_PRIMEIRO_CONTATO",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -2855,8 +2887,18 @@
           ],
           "schema": [
             {
-              "id": "FOLLOW_UP",
-              "displayName": "FOLLOW_UP",
+              "id": "DATA_PRIMEIRO_CONTATO",
+              "displayName": "DATA_PRIMEIRO_CONTATO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "HORA_PRIMEIRO_CONTATO",
+              "displayName": "HORA_PRIMEIRO_CONTATO",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -3908,7 +3950,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "9b3e5dfe-a1df-4fc9-8625-f540e4d9259f",
+  "versionId": "e65131ce-1f0d-48f2-9313-19255452ccc7",
   "triggerCount": 2,
   "tags": [
     {
