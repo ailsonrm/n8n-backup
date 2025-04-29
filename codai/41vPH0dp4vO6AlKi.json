@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-22T18:46:59.846Z",
-  "updatedAt": "2025-04-22T19:16:27.829Z",
+  "updatedAt": "2025-04-28T15:10:17.173Z",
   "id": "41vPH0dp4vO6AlKi",
   "name": "RAG",
   "active": false,
@@ -697,7 +697,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "9f9b0eeb-da56-4ed2-9030-fbe58eb10d23",
+  "versionId": "3e313d41-a30a-4d67-b468-1c1ce8712628",
   "triggerCount": 1,
   "tags": [
     {
