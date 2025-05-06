@@ -1,0 +1,100 @@
+{
+  "createdAt": "2025-05-05T14:56:24.513Z",
+  "updatedAt": "2025-05-05T18:15:19.133Z",
+  "id": "zLOW0a795FGNzxRr",
+  "name": "Sindney-AI | Router",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "sindney-ai-router",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -180,
+        320
+      ],
+      "id": "b0827cd8-d402-41ed-ac2c-1be824a92123",
+      "name": "Webhook",
+      "webhookId": "a953b4e1-309f-49f6-be8e-0d5d70d22400"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://editor.n8n.codai.dev.br/webhook-test/sindney-ai-cxa",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        40,
+        220
+      ],
+      "id": "bd9469a8-7897-4b7a-a4b8-7dc31d2d74f8",
+      "name": "Sindnei-AI Dev",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://webhooks.n8n.codai.dev.br/webhook/sindney-ai-cxa",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        40,
+        420
+      ],
+      "id": "6ce2cd0d-5f2c-49c6-a218-8d1a835092ca",
+      "name": "Sindnei-AI Prod",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Sindnei-AI Prod",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Sindnei-AI Dev",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "all",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "15509a81-bffa-4775-a92a-3e38f876907f",
+  "triggerCount": 1,
+  "tags": [
+    {
+      "createdAt": "2025-05-05T14:56:39.514Z",
+      "updatedAt": "2025-05-05T14:56:39.514Z",
+      "id": "vodMP5gAIQMzthVz",
+      "name": "sindney-ai"
+    }
+  ]
+}
