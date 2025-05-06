@@ -1,0 +1,710 @@
+{
+  "createdAt": "2025-05-06T00:46:38.002Z",
+  "updatedAt": "2025-05-06T00:47:46.460Z",
+  "id": "PTR9nYO3UgyFFBzz",
+  "name": "RAG",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## R.A.G",
+        "height": 620,
+        "width": 2640,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -260,
+        20
+      ],
+      "typeVersion": 1,
+      "id": "7c15d762-d529-43b6-bde1-efbabc4ff30e",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1680,
+        280
+      ],
+      "id": "c54f799e-702c-483e-bed6-ac22ba0948ea",
+      "name": "Embeddings OpenAI3",
+      "credentials": {
+        "openAiApi": {
+          "id": "zSHvCLTefXKkrDxW",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        400,
+        200
+      ],
+      "id": "df901290-6674-4f1c-9c01-46412ff9c876",
+      "name": "loop-files"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        580,
+        100
+      ],
+      "id": "2d6d5a86-6162-4ac3-ab3e-32a89b277f38",
+      "name": "The End"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "={{ $('Get Organization SETUP - RAG').item.json.vector_rag_table }}",
+          "mode": "id"
+        },
+        "options": {
+          "queryName": "={{ $('Get Organization SETUP - RAG').item.json.match_function }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        100
+      ],
+      "id": "c5400d05-a0c5-4f54-826d-ea4223658e28",
+      "name": "insert-doc-into-vector-store",
+      "credentials": {
+        "supabaseApi": {
+          "id": "fIYIweP666i34eFc",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": ">>>",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        440
+      ],
+      "id": "bf0a131d-bf3c-4405-86b1-8bde008aebbb"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "yqwEdDKGCRIdSM58",
+          "mode": "list",
+          "cachedResultName": "OCR | EdenAI"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "file_name": "={{ $('loop-files').item.json.name }}",
+            "bucket_id": "={{ $('Get Organization SETUP - RAG').item.json.bucket }}",
+            "project_id": "={{ $('Get Organization SETUP - RAG').item.json.project_id }}"
+          },
+          "matchingColumns": [
+            "file_name"
+          ],
+          "schema": [
+            {
+              "id": "file_name",
+              "displayName": "file_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "bucket_id",
+              "displayName": "bucket_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "project_id",
+              "displayName": "project_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1260,
+        260
+      ],
+      "id": "a6f125f5-5536-4701-a0df-d4fba303817d",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "organization",
+                "value": "={{ $('Get Organization SETUP - RAG').item.json.name }}"
+              },
+              {
+                "name": "=bucket",
+                "value": "={{ $('Get Organization SETUP - RAG').item.json.bucket }}"
+              },
+              {
+                "name": "file_name",
+                "value": "={{ $('loop-files').item.json.name }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        280
+      ],
+      "id": "edfb4514-d53c-498f-8394-cfcd48d092f8",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "chunkSize": 2500,
+        "chunkOverlap": 250,
+        "options": {
+          "splitCode": "markdown"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        420
+      ],
+      "id": "91c7bcc0-27e9-4ae7-80b5-c9ba5b526418",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1a361e3f-e955-4846-a3fd-068df085fdec",
+              "name": "=clean_text",
+              "value": "={{ $json.data[0].text || $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1460,
+        260
+      ],
+      "id": "e1375db6-ed15-4cdb-81e0-5cd5228a1d3a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "tableId": "storage_file_sync",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "=file_name",
+              "fieldValue": "={{ $('loop-files').item.json.name }}"
+            },
+            {
+              "fieldId": "organization",
+              "fieldValue": "={{ $('Get Organization SETUP - RAG').item.json.name }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        260
+      ],
+      "id": "e635281d-d40f-40b0-a2a9-14f0ac157d32",
+      "name": "Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "fIYIweP666i34eFc",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "={{ $('Get Organization SETUP - RAG').item.json.file_sync_table}}",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "file_name",
+              "condition": "eq",
+              "keyValue": "={{ $('loop-files').item.json.name }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "processed",
+              "fieldValue": "=true"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        240,
+        420
+      ],
+      "id": "2684b4b2-9dda-4387-9771-ef02c4fc6440",
+      "name": "Supabase1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "fIYIweP666i34eFc",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "=storage_file_sync",
+        "returnAll": true,
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "file_name",
+              "condition": "eq",
+              "keyValue": "={{ $json.name }}"
+            },
+            {
+              "keyName": "organization",
+              "condition": "eq",
+              "keyValue": "={{ $('Get Organization SETUP - RAG').item.json.name }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        580,
+        280
+      ],
+      "id": "ca05cfe7-f045-439c-a525-b6e9eb89b82d",
+      "name": "Supabase2",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "fIYIweP666i34eFc",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "cf9547e2-4c1c-463c-843c-de801a6fd47e",
+                    "leftValue": "={{ $json.processed }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "false",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Não Processado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.processed }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "id": "7389f352-bf07-431d-bff1-e33b2f142e5d"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Processado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        780,
+        280
+      ],
+      "id": "ffcdeb5a-23ec-4f54-8c0e-effd4067202b",
+      "name": "Switch"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        960,
+        420
+      ],
+      "id": "9005e76c-ef95-47fe-b90a-99528c2abc77",
+      "name": "Próximo"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "organizations",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "evolution_instance",
+              "keyValue": "={{ $('On form submission').item.json.organization_name }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        0,
+        200
+      ],
+      "id": "12a8562e-2e03-4fe1-b5ad-f8c5be8e2eb1",
+      "name": "Get Organization SETUP - RAG",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "fIYIweP666i34eFc",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "formTitle": "Organization - RAG",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "organization_name",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -200,
+        200
+      ],
+      "id": "aea4acd9-bc86-4e3a-b3e4-a394eb78816b",
+      "name": "On form submission",
+      "webhookId": "2cb96fea-66d1-49c9-8a88-61921ab80aa2"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  name\nFROM\n    storage.objects\nWHERE\n  bucket_id = '{{ $('Get Organization SETUP - RAG').item.json.bucket }}'\nAND name NOT LIKE '.%'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        200,
+        200
+      ],
+      "id": "494e812d-17f3-4f04-97a1-5e3154fbfb0d",
+      "name": "conn-postgres-codai-2",
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "IhWbhwe6NsyEvmfE",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Embeddings OpenAI3": {
+      "ai_embedding": [
+        [
+          {
+            "node": "insert-doc-into-vector-store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "loop-files": {
+      "main": [
+        [
+          {
+            "node": "The End",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Supabase2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "insert-doc-into-vector-store": {
+      "main": [
+        [
+          {
+            "node": ">>>",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    ">>>": {
+      "main": [
+        [
+          {
+            "node": "Supabase1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "insert-doc-into-vector-store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "insert-doc-into-vector-store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase1": {
+      "main": [
+        [
+          {
+            "node": "Próximo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase2": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Próximo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Próximo": {
+      "main": [
+        [
+          {
+            "node": "loop-files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Organization SETUP - RAG": {
+      "main": [
+        [
+          {
+            "node": "conn-postgres-codai-2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Get Organization SETUP - RAG",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "conn-postgres-codai-2": {
+      "main": [
+        [
+          {
+            "node": "loop-files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "41ff1d19-ea62-4017-8bfb-251e4f118dd1",
+  "triggerCount": 0,
+  "tags": [
+    {
+      "createdAt": "2025-05-06T00:46:46.560Z",
+      "updatedAt": "2025-05-06T00:46:46.560Z",
+      "id": "5iWHmmnTyokaR01Q",
+      "name": "codai"
+    }
+  ]
+}
