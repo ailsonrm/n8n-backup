@@ -1,0 +1,204 @@
+{
+  "createdAt": "2025-05-06T00:48:21.743Z",
+  "updatedAt": "2025-05-06T01:25:14.754Z",
+  "id": "NdlVM8R2UPMZQRUi",
+  "name": "Backup",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 1
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -400,
+        200
+      ],
+      "id": "8fba3e07-44c7-44f6-992d-8990e7e3d648",
+      "name": "schedule-todo-dia-1h-da-manha"
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "CONTAINER=$(docker ps --format $(printf '{{.Names}}') | grep '^postgres' | head -n 1) && \\\ndocker exec -e PGPASSWORD=\"d581342939ea538458e4\" -i \"$CONTAINER\" \\\npg_dump -U postgres -d n8n > /backups/n8n/n8n_backup_$(date +%F_%H-%M).sql\n\n"
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        -180,
+        0
+      ],
+      "id": "4f06bcc9-089d-42b3-8cba-652f844a4440",
+      "name": "Dump N8N postgres VPS",
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "QDlXEoaw3wdWpMPP",
+          "name": "SSH Password account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "CONTAINER=$(docker ps --format $(printf '{{.Names}}') | grep '^evolution_evolution-postgres' | head -n 1) && \\\ndocker exec -e PGPASSWORD=\"6b826013fe5163481eb1\" -i \"$CONTAINER\" \\\npg_dump -U postgres -d evolution > /backups/evolution/evolution_backup_$(date +%F_%H-%M).sql"
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        -180,
+        200
+      ],
+      "id": "4ce173db-b6e8-493c-9a85-4184f501e273",
+      "name": "Dump Evolution postgres VPS",
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "QDlXEoaw3wdWpMPP",
+          "name": "SSH Password account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sendTo": "ailson.rm.dev@gmail.com",
+        "subject": "Backup N8n - Postgres",
+        "emailType": "text",
+        "message": "Backup N8n - Postgres => Realizado com Sucesso!",
+        "options": {
+          "appendAttribution": true
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        40,
+        0
+      ],
+      "id": "2b79a3e1-801e-459c-87b1-0e89f1f9d0d5",
+      "name": "E-mail Backup N8n - Ok!",
+      "webhookId": "279f3ae2-8910-4912-b9d3-c4bcd95cbabe",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "lglPuZceohiZHH3c",
+          "name": "Gmail account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sendTo": "ailson.rm.dev@gmail.com",
+        "subject": "Backup Evolution - Postgres",
+        "emailType": "text",
+        "message": "Backup Evolution - Postgres => Realizado com Sucesso!",
+        "options": {
+          "appendAttribution": true
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        40,
+        200
+      ],
+      "id": "336c538d-c209-4c69-bd1a-fe4abb781cbb",
+      "name": "E-mail Backup Evolution - Ok!1",
+      "webhookId": "279f3ae2-8910-4912-b9d3-c4bcd95cbabe",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "lglPuZceohiZHH3c",
+          "name": "Gmail account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "sEv1Hrw5Rl5oUESZ",
+          "mode": "list",
+          "cachedResultName": "Backup GitHub"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -180,
+        400
+      ],
+      "id": "24aaae1f-89cb-4b8a-b195-0411dd189828",
+      "name": "Execute Workflow - Backup GitHub"
+    }
+  ],
+  "connections": {
+    "schedule-todo-dia-1h-da-manha": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow - Backup GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dump N8N postgres VPS": {
+      "main": [
+        [
+          {
+            "node": "E-mail Backup N8n - Ok!",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dump Evolution postgres VPS": {
+      "main": [
+        [
+          {
+            "node": "E-mail Backup Evolution - Ok!1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "2f2dfdc8-7996-4acb-9fd1-3a5d0280409a",
+  "triggerCount": 0,
+  "tags": [
+    {
+      "createdAt": "2025-05-06T00:46:46.560Z",
+      "updatedAt": "2025-05-06T00:46:46.560Z",
+      "id": "5iWHmmnTyokaR01Q",
+      "name": "codai"
+    }
+  ]
+}
