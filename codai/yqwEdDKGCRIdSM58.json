@@ -1,0 +1,788 @@
+{
+  "createdAt": "2025-04-22T18:54:49.573Z",
+  "updatedAt": "2025-04-23T14:13:03.993Z",
+  "id": "yqwEdDKGCRIdSM58",
+  "name": "OCR EdenAI",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Edit Fields').item.json.edenai.ocr_url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Edit Fields').item.json.edenai.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "providers",
+              "value": "amazon"
+            },
+            {
+              "name": "file_url",
+              "value": "=https://{{ $('Edit Fields').item.json.supabase.project_id }}.supabase.co/storage/v1/object/public/{{ $('Edit Fields').item.json.supabase.bucket_id }}/{{ $('When Executed by Another Workflow').item.json.file_name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1276,
+        255
+      ],
+      "id": "9af8e0dc-9a0b-4e6c-8efc-d26eb3cb1270",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1496,
+        255
+      ],
+      "id": "c9ce70fd-ab18-472d-bc13-4d9e47d9cfae",
+      "name": "Wait",
+      "webhookId": "9e799873-c006-4cde-be33-d760da9374fd"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "309ef9f8-ccac-4d31-a706-ab999e60ba8d",
+              "leftValue": "={{ $json.results.amazon.final_status }}",
+              "rightValue": "succeeded",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1936,
+        255
+      ],
+      "id": "1d153c1f-4c71-409c-b682-56a4ea0af727",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Edit Fields').item.json.edenai.ocr_url }}/\n{{ $json.public_id }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "response_as_dict",
+              "value": "true"
+            },
+            {
+              "name": "show_base_64",
+              "value": "true"
+            },
+            {
+              "name": "show_original_response",
+              "value": "false"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            },
+            {
+              "name": "authorization",
+              "value": "=Bearer {{ $('Edit Fields').item.json.edenai.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1716,
+        180
+      ],
+      "id": "80e28c3c-6999-4dd7-bf25-b41055d63af8",
+      "name": "Busca API"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        768,
+        375
+      ],
+      "id": "4bda4fb8-7a9c-41f1-9bae-8a58b2778c50",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "di9H6klhz4rejAkz",
+          "name": "conn-open-ai-codai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.info.toJsonString() }}{{ $json.text }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Você receberá informações extraídas de um documento PDF. Sua tarefa é determinar se essas informações foram extraídas de um PDF nativo ou de um PDF digitalizado.\n\nAqui estão as informações extraídas:\n<extracted_info>\n{{ $json.toJsonString() }}\n</extracted_info>\n\nAnalise cuidadosamente as informações fornecidas. Considere os seguintes critérios para determinar se o PDF é nativo ou imagem:\n\n1. Se não conter texto suficiente sobre o documento {{ $json.text }} como false.\n2. Qualidade e consistência do texto: PDFs nativos geralmente apresentam texto claro e nítido e de aparência uniforme.\n3. Presença de texto pesquisável: PDFs nativos geralmente contêm texto que pode ser selecionado e copiado.\n4. Layout e formatação: PDFs nativos geralmente mantêm formatação e layout precisos.\n5. Metadados: PDFs nativos podem incluir metadados sobre a criação e modificação do documento.\n\n\nApós sua análise, responda com:\n- \"true\" se você determinar que as informações foram extraídas de um PDF nativo\n- \"false\" se você determinar que as informações foram extraídas de um PDF digitalizado"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        680,
+        155
+      ],
+      "id": "f84f14e7-0bed-408d-8def-8806d60f38b8",
+      "name": "Verifica se é PDF Nativo"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "fb4a99ed-7875-4c79-9861-13459b44d429",
+              "leftValue": "={{ $json.text }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1056,
+        155
+      ],
+      "id": "49e216b1-daa6-4ab8-86d8-9ca46df38fbe",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "85d4fbb5-98ce-41b4-a903-7e30edd6f098",
+              "name": "text",
+              "value": "={{ $json.results.amazon.raw_text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2156,
+        255
+      ],
+      "id": "5f589088-ac78-4da4-a83d-0658627cb785",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "61dc0775-5e0a-4853-aa8f-aa77ba1d8b71",
+              "name": "text",
+              "value": "={{ $('Extract from File').item.json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2156,
+        5
+      ],
+      "id": "73d9a479-77ee-47e4-9cc2-3c9611290ebe",
+      "name": "Normalize"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2376,
+        5
+      ],
+      "id": "a81239c5-9c65-4cc9-9ddc-1b887cfc45ad",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "file_name"
+            },
+            {
+              "name": "bucket_id"
+            },
+            {
+              "name": "project_id"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -420,
+        30
+      ],
+      "id": "271b8bec-a146-49e6-8ac3-6fd12e2b6454",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "beaf9ca0-4c14-4c4d-855b-496407297a56",
+                    "leftValue": "={{ $('When Executed by Another Workflow').item.json.file_name }}",
+                    "rightValue": ".txt",
+                    "operator": {
+                      "type": "string",
+                      "operation": "endsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "txt"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "493841b2-caf4-4dc4-a000-e08944c856a3",
+                    "leftValue": "={{ $('When Executed by Another Workflow').item.json.file_name }}",
+                    "rightValue": "=.doc ",
+                    "operator": {
+                      "type": "string",
+                      "operation": "endsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "doc"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "445943d8-3fd8-4812-90a8-22f3585fcd60",
+                    "leftValue": "={{ $('When Executed by Another Workflow').item.json.file_name }}",
+                    "rightValue": ".docx",
+                    "operator": {
+                      "type": "string",
+                      "operation": "endsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "docx"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "72585a3d-4bcd-4cbc-b8af-3d835e602925",
+                    "leftValue": "={{ $('When Executed by Another Workflow').item.json.file_name }}",
+                    "rightValue": ".pdf",
+                    "operator": {
+                      "type": "string",
+                      "operation": "endsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "pdf"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        20,
+        9
+      ],
+      "id": "f70d4793-c5d0-4830-a99e-ecc3a6ce6bd9",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3d93e2c9-b3f4-4a34-9637-9b2fe10f38a6",
+              "name": "edenai.ocr_url",
+              "value": "https://api.edenai.run/v2/ocr/ocr_async",
+              "type": "string"
+            },
+            {
+              "id": "a035f0a7-68b8-4cb5-a76b-e17b5f6776a0",
+              "name": "edenai.token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMmZmZjlmNjMtMzFkYS00NTU3LWI0ZGUtYzk4YmVhMTVhZjg2IiwidHlwZSI6ImFwaV90b2tlbiJ9.Ub_VF9WtldgLKorBY2Yooto2MCB5ulGKRQ6LkwfUlbs",
+              "type": "string"
+            },
+            {
+              "id": "490165ed-8ccb-487c-95c3-e17714dfff0e",
+              "name": "supabase.project_id",
+              "value": "={{ $('When Executed by Another Workflow').item.json.project_id }}",
+              "type": "string"
+            },
+            {
+              "id": "7a32a56b-7eaf-4f22-94e5-5dfbac4be437",
+              "name": "supabase.bucket_id",
+              "value": "={{ $('When Executed by Another Workflow').item.json.bucket_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -200,
+        30
+      ],
+      "id": "ca29b49f-c08e-46b0-a32b-36ad51fc5a30",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        460,
+        155
+      ],
+      "id": "8eb756b4-cc49-4eeb-b25d-e540dd050eb3",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "url": "=https://{{ $('Edit Fields').item.json.supabase.project_id }}.supabase.co/storage/v1/object/public/{{ $('Edit Fields').item.json.supabase.bucket_id }}/{{ $('When Executed by Another Workflow').item.json.file_name }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        240,
+        155
+      ],
+      "id": "4dcf2051-d101-4648-9deb-ef5ae012f831",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "=https://{{ $('Edit Fields').item.json.supabase.project_id }}.supabase.co/storage/v1/object/public/{{ $('Edit Fields').item.json.supabase.bucket_id }}/{{ $('When Executed by Another Workflow').item.json.file_name }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1716,
+        -220
+      ],
+      "id": "93e7a622-ffe6-426d-a7b6-565198cd88f9",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1936,
+        -220
+      ],
+      "id": "0cb83ab7-f01e-4fc7-a7d4-bcd7658d1af8",
+      "name": "Extract from File1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "61dc0775-5e0a-4853-aa8f-aa77ba1d8b71",
+              "name": "text",
+              "value": "={{ $('Extract from File1').item.json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2156,
+        -220
+      ],
+      "id": "92328da2-8b02-4c0d-b4fb-0a5f17e90065",
+      "name": "Normalize1"
+    }
+  ],
+  "connections": {
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Busca API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Busca API": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Verifica se é PDF Nativo",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verifica se é PDF Nativo": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Normalize",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Verifica se é PDF Nativo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File1": {
+      "main": [
+        [
+          {
+            "node": "Normalize1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "a6c35b81-c8d1-4dee-8016-771b7777532b",
+  "triggerCount": 0,
+  "tags": [
+    {
+      "createdAt": "2025-04-22T18:14:34.606Z",
+      "updatedAt": "2025-04-22T18:14:34.606Z",
+      "id": "PsezBfdZMcoxg90c",
+      "name": "codai"
+    }
+  ]
+}
