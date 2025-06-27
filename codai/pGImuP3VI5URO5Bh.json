@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-05-19T19:39:54.441Z",
-  "updatedAt": "2025-06-27T17:15:24.511Z",
+  "updatedAt": "2025-06-27T17:16:25.155Z",
   "id": "pGImuP3VI5URO5Bh",
   "name": "Backup GitHub",
   "active": true,
@@ -49,7 +49,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -440,
+        -400,
         -20
       ],
       "id": "a724c850-403e-4170-891e-67bc1eca245f",
@@ -72,7 +72,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        220,
+        200,
         260
       ],
       "id": "5b26eef6-1487-422d-988f-81a6c9b667d2",
@@ -87,7 +87,7 @@
       "typeVersion": 1,
       "position": [
         520,
-        40
+        60
       ],
       "id": "31844d20-76aa-494d-839b-d1a37b6ab35c",
       "name": "Extract from File"
@@ -135,7 +135,7 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        1300,
+        1520,
         440
       ],
       "id": "1fe19af2-33e6-49a6-9861-bf2913b23889",
@@ -170,7 +170,7 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        1300,
+        1520,
         260
       ],
       "id": "07acc22c-6d1d-4cef-a889-53ec6d8c9d21",
@@ -195,7 +195,7 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        1120,
+        1340,
         260
       ],
       "id": "19508db7-63b2-481c-b044-6a187201171c",
@@ -213,7 +213,7 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        1120,
+        1340,
         440
       ],
       "id": "b6d535f4-619a-4305-9161-62794ed903ef",
@@ -229,7 +229,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        960,
+        1180,
         260
       ],
       "id": "7a021b6b-68c5-41d7-9593-99e1c513e324",
@@ -245,7 +245,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        960,
+        1180,
         440
       ],
       "id": "d0cd5847-e34c-4d19-9d72-f71738fd834d",
@@ -265,7 +265,7 @@
       "typeVersion": 2.1,
       "position": [
         200,
-        -160
+        -140
       ],
       "id": "6ad80bef-e6b0-45bc-8239-cc6d84c6d402",
       "name": "E-mail Backup N8n - Workflow's - Ok!",
@@ -287,7 +287,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3,
       "position": [
-        1500,
+        1720,
         360
       ],
       "id": "18402170-fd68-4372-a9d3-3bd66ca94f1b",
@@ -317,7 +317,7 @@
       "typeVersion": 1,
       "position": [
         360,
-        40
+        60
       ],
       "id": "178df0d4-8694-479d-b556-e9d34bdd8474",
       "name": "Get a file",
@@ -351,8 +351,8 @@
       "name": "Replace Me",
       "typeVersion": 1,
       "position": [
-        1700,
-        520
+        2060,
+        480
       ],
       "id": "864ee2f3-cbea-43e1-968b-6fa1f50569f1"
     },
@@ -374,7 +374,7 @@
       "typeVersion": 3.4,
       "position": [
         200,
-        40
+        60
       ],
       "id": "a9897e21-31fd-44ea-8ac9-c66569ad1be4",
       "name": "Edit Fields"
@@ -392,11 +392,22 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -600,
+        -580,
         -20
       ],
       "id": "c5222d2f-5f3c-4920-8f4b-acfce6fe5fad",
       "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        100
+      ],
+      "id": "7accdf5f-57e7-43ac-a15a-1b6a7a3924d3",
+      "name": "No Operation, do nothing"
     }
   ],
   "connections": {
@@ -449,7 +460,7 @@
         [],
         [
           {
-            "node": "Replace Me",
+            "node": "No Operation, do nothing",
             "type": "main",
             "index": 0
           }
@@ -613,6 +624,17 @@
           }
         ]
       ]
+    },
+    "No Operation, do nothing": {
+      "main": [
+        [
+          {
+            "node": "Replace Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -627,7 +649,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "9806d13f-0dce-4796-8a70-92268232c1e8",
+  "versionId": "9ddc3f60-6a32-42f8-b162-9cbc9f09fb15",
   "triggerCount": 1,
   "tags": [
     {
