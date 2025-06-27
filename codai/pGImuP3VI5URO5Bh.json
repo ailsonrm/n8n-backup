@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-05-19T19:39:54.441Z",
-  "updatedAt": "2025-06-27T16:24:33.349Z",
+  "updatedAt": "2025-06-27T16:26:24.227Z",
   "id": "pGImuP3VI5URO5Bh",
   "name": "Backup GitHub",
   "active": false,
@@ -170,8 +170,8 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        1300,
-        260
+        1380,
+        200
       ],
       "id": "07acc22c-6d1d-4cef-a889-53ec6d8c9d21",
       "name": "GitHub Edit File",
@@ -610,7 +610,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "66e28219-eefe-4de2-9b16-2d6881abd615",
+  "versionId": "5328324d-4109-4c11-a698-fed0491fc2c6",
   "triggerCount": 0,
   "tags": [
     {
