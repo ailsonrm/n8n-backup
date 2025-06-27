@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-05-19T19:39:54.441Z",
-  "updatedAt": "2025-06-27T17:12:17.297Z",
+  "updatedAt": "2025-06-27T17:15:24.511Z",
   "id": "pGImuP3VI5URO5Bh",
   "name": "Backup GitHub",
   "active": true,
@@ -128,7 +128,7 @@
           "value": "={{ $('basic_infos').first().json.repository }}",
           "mode": "name"
         },
-        "filePath": "={{ $('Edit Fields').first().json.t1 }}",
+        "filePath": "={{ $('Edit Fields').first().json.filePath }}",
         "binaryData": true,
         "commitMessage": "={{ $('Workflow to Create').item.json.name }}"
       },
@@ -163,7 +163,7 @@
           "value": "={{ $('basic_infos').first().json.repository }}",
           "mode": "name"
         },
-        "filePath": "={{ $('Edit Fields').first().json.t1 }}",
+        "filePath": "={{ $('Edit Fields').first().json.filePath }}",
         "binaryData": true,
         "commitMessage": "={{ $('Workflow to Edit').item.json.name }}"
       },
@@ -310,7 +310,7 @@
           "value": "={{ $('basic_infos').item.json.repository }}",
           "mode": "name"
         },
-        "filePath": "={{ $json.t1 }}",
+        "filePath": "={{ $json.filePath }}",
         "additionalParameters": {}
       },
       "type": "n8n-nodes-base.github",
@@ -362,7 +362,7 @@
           "assignments": [
             {
               "id": "9fcba196-2cb8-4834-b427-db1d840144d6",
-              "name": "t1",
+              "name": "filePath",
               "value": "={{ $('Loop Over Items').item.json.tags[0].name }}/{{ $json.id }}.json",
               "type": "string"
             }
@@ -627,7 +627,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "95b35e54-80f0-4c55-88fb-48ffd214adbe",
+  "versionId": "9806d13f-0dce-4796-8a70-92268232c1e8",
   "triggerCount": 1,
   "tags": [
     {
