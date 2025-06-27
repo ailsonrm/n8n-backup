@@ -1,8 +1,8 @@
 {
   "createdAt": "2025-05-19T19:39:54.441Z",
-  "updatedAt": "2025-06-27T16:27:21.009Z",
+  "updatedAt": "2025-06-27T16:28:01.019Z",
   "id": "pGImuP3VI5URO5Bh",
-  "name": "Backup GitHub",
+  "name": "Backup GitHub 123",
   "active": false,
   "isArchived": false,
   "nodes": [
@@ -253,7 +253,6 @@
     },
     {
       "parameters": {
-        "authentication": "serviceAccount",
         "sendTo": "ailson.rm.dev@gmail.com",
         "subject": "Backup N8n - Worflow's",
         "emailType": "text",
@@ -272,9 +271,9 @@
       "name": "E-mail Backup N8n - Workflow's - Ok!",
       "webhookId": "279f3ae2-8910-4912-b9d3-c4bcd95cbabe",
       "credentials": {
-        "googleApi": {
-          "id": "bxp0F5u0sPfGs6wB",
-          "name": "Google Sheets account - Service Account"
+        "gmailOAuth2": {
+          "id": "KWFL1NSO2r6cpRZA",
+          "name": "Gmail account"
         }
       }
     },
@@ -610,7 +609,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "9a6d9849-04e5-4d86-afa2-1b9bbee5c3e8",
+  "versionId": "4301893b-e17b-4de3-9a58-8744cd0fb7d8",
   "triggerCount": 0,
   "tags": [
     {
