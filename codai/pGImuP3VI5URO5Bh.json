@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-05-19T19:39:54.441Z",
-  "updatedAt": "2025-06-27T15:15:59.036Z",
+  "updatedAt": "2025-06-27T15:16:38.412Z",
   "id": "pGImuP3VI5URO5Bh",
   "name": "Backup GitHub",
   "active": false,
@@ -128,7 +128,7 @@
           "value": "={{ $('basic_infos').first().json.repository }}",
           "mode": "name"
         },
-        "filePath": "={{ $('n8n_get_all_workflows').first().json.tags[0].name}}/{{ $('Workflow to Create').item.json.id }}.json",
+        "filePath": "={{ $('n8n_get_all_workflows').item.json.tags[0].name}}/{{ $('Workflow to Create').item.json.id }}.json",
         "binaryData": true,
         "commitMessage": "={{ $('Workflow to Create').item.json.name }}"
       },
@@ -521,7 +521,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "69c1279e-8a9c-4750-bb43-33d258a4cd6f",
+  "versionId": "a40a1fad-c38d-41c5-af6c-adbe7b376c56",
   "triggerCount": 0,
   "tags": [
     {
