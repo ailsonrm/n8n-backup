@@ -1,0 +1,612 @@
+{
+  "data": {
+    "createdAt": "2025-05-19T21:19:37.996Z",
+    "updatedAt": "2025-06-27T14:43:56.761Z",
+    "id": "YlHcxNkTD45LycDZ",
+    "name": "MCP Server Airtable",
+    "active": false,
+    "isArchived": false,
+    "nodes": [
+      {
+        "parameters": {
+          "path": "mcp-server-airtable"
+        },
+        "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+        "typeVersion": 1,
+        "position": [
+          -500,
+          -220
+        ],
+        "id": "68c8bd63-8f43-4ec0-96c5-65eba48187c7",
+        "name": "MCP Server Trigger",
+        "webhookId": "5fcfd9cc-689f-4908-9ba9-aa1523aa81c0"
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "base": {
+            "__rl": true,
+            "value": "appGjv1f72SG2agoL",
+            "mode": "list",
+            "cachedResultName": "CODAI Base",
+            "cachedResultUrl": "https://airtable.com/appGjv1f72SG2agoL"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tblLgO7vtW4Cj8Jo9",
+            "mode": "list",
+            "cachedResultName": "Table 1",
+            "cachedResultUrl": "https://airtable.com/appGjv1f72SG2agoL/tblLgO7vtW4Cj8Jo9"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "Descrição": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Descri__o', ``, 'string') }}",
+              "Placa": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Placa', `all in upper case`, 'string') }}",
+              "Carro": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Carro', ``, 'string') }}",
+              "Telefone": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Telefone', ``, 'string') }}",
+              "Cliente": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Cliente', ``, 'string') }}",
+              "valor": 0,
+              "aprovado": false
+            },
+            "matchingColumns": [
+              "id"
+            ],
+            "schema": [
+              {
+                "id": "Cliente",
+                "displayName": "Cliente",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Descrição",
+                "displayName": "Descrição",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Status",
+                "displayName": "Status",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "Em Análise",
+                    "value": "Em Análise"
+                  },
+                  {
+                    "name": "Aguardando Aprovação",
+                    "value": "Aguardando Aprovação"
+                  },
+                  {
+                    "name": "Em Andamento",
+                    "value": "Em Andamento"
+                  },
+                  {
+                    "name": "Finalizado",
+                    "value": "Finalizado"
+                  }
+                ],
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "Placa",
+                "displayName": "Placa",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Carro",
+                "displayName": "Carro",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Telefone",
+                "displayName": "Telefone",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "numero",
+                "displayName": "numero",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": true
+              },
+              {
+                "id": "valor",
+                "displayName": "valor",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "aprovado",
+                "displayName": "aprovado",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "boolean",
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtableTool",
+        "typeVersion": 2.1,
+        "position": [
+          -580,
+          -20
+        ],
+        "id": "ca0b15df-927b-426d-9729-e2b33a429efe",
+        "name": "Airtable Create",
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "wqA6Lc05M0sqefc9",
+            "name": "Airtable Personal Access Token account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "https://api.airtable.com/v0/appGjv1f72SG2agoL/Table%201?maxRecords=10&view=Grid%20view",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "Bearer patf0gwhLLRcZewZd.3a1930eaf555c6180d165e7a2857641d1d6f1fb6692497a9a0df064d7ea27b2a"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          -360,
+          40
+        ],
+        "id": "7b4363b5-39ed-4fbf-b016-6650f38b48f6",
+        "name": "Airtable Searchold",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "operation": "search",
+          "base": {
+            "__rl": true,
+            "value": "appGjv1f72SG2agoL",
+            "mode": "list",
+            "cachedResultName": "CODAI Base",
+            "cachedResultUrl": "https://airtable.com/appGjv1f72SG2agoL"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tblLgO7vtW4Cj8Jo9",
+            "mode": "list",
+            "cachedResultName": "Table 1",
+            "cachedResultUrl": "https://airtable.com/appGjv1f72SG2agoL/tblLgO7vtW4Cj8Jo9"
+          },
+          "filterByFormula": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Filter_By_Formula', ``, 'string') }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtableTool",
+        "typeVersion": 2.1,
+        "position": [
+          -160,
+          -20
+        ],
+        "id": "ae78e46a-43a3-4525-963e-5ac58e3ab745",
+        "name": "Airtable Search",
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "wqA6Lc05M0sqefc9",
+            "name": "Airtable Personal Access Token account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Airtable Create": {
+        "ai_tool": [
+          [
+            {
+              "node": "MCP Server Trigger",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Airtable Searchold": {
+        "ai_tool": [
+          [
+            {
+              "node": "MCP Server Trigger",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Airtable Search": {
+        "ai_tool": [
+          [
+            {
+              "node": "MCP Server Trigger",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "staticData": null,
+    "meta": {
+      "templateCredsSetupCompleted": true
+    },
+    "pinData": {},
+    "versionId": "942dbe28-501e-46f5-9b54-d1fe09f609e8",
+    "triggerCount": 1,
+    "tags": [
+      {
+        "createdAt": "2025-05-19T18:41:32.426Z",
+        "updatedAt": "2025-05-19T18:41:32.426Z",
+        "id": "byJF50EssW8Z7Xdg",
+        "name": "codai"
+      }
+    ]
+  },
+  "createdAt": "2025-05-19T21:19:37.996Z",
+  "updatedAt": "2025-06-27T14:43:56.761Z",
+  "id": "YlHcxNkTD45LycDZ",
+  "name": "MCP Server Airtable",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "path": "mcp-server-airtable"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 1,
+      "position": [
+        -500,
+        -220
+      ],
+      "id": "68c8bd63-8f43-4ec0-96c5-65eba48187c7",
+      "name": "MCP Server Trigger",
+      "webhookId": "5fcfd9cc-689f-4908-9ba9-aa1523aa81c0"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appGjv1f72SG2agoL",
+          "mode": "list",
+          "cachedResultName": "CODAI Base",
+          "cachedResultUrl": "https://airtable.com/appGjv1f72SG2agoL"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblLgO7vtW4Cj8Jo9",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appGjv1f72SG2agoL/tblLgO7vtW4Cj8Jo9"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Descrição": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Descri__o', ``, 'string') }}",
+            "Placa": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Placa', `all in upper case`, 'string') }}",
+            "Carro": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Carro', ``, 'string') }}",
+            "Telefone": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Telefone', ``, 'string') }}",
+            "Cliente": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Cliente', ``, 'string') }}",
+            "valor": 0,
+            "aprovado": false
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "Cliente",
+              "displayName": "Cliente",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Descrição",
+              "displayName": "Descrição",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Em Análise",
+                  "value": "Em Análise"
+                },
+                {
+                  "name": "Aguardando Aprovação",
+                  "value": "Aguardando Aprovação"
+                },
+                {
+                  "name": "Em Andamento",
+                  "value": "Em Andamento"
+                },
+                {
+                  "name": "Finalizado",
+                  "value": "Finalizado"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Placa",
+              "displayName": "Placa",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Carro",
+              "displayName": "Carro",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "numero",
+              "displayName": "numero",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "valor",
+              "displayName": "valor",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "aprovado",
+              "displayName": "aprovado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        -580,
+        -20
+      ],
+      "id": "ca0b15df-927b-426d-9729-e2b33a429efe",
+      "name": "Airtable Create",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "wqA6Lc05M0sqefc9",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.airtable.com/v0/appGjv1f72SG2agoL/Table%201?maxRecords=10&view=Grid%20view",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer patf0gwhLLRcZewZd.3a1930eaf555c6180d165e7a2857641d1d6f1fb6692497a9a0df064d7ea27b2a"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -360,
+        40
+      ],
+      "id": "7b4363b5-39ed-4fbf-b016-6650f38b48f6",
+      "name": "Airtable Searchold",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appGjv1f72SG2agoL",
+          "mode": "list",
+          "cachedResultName": "CODAI Base",
+          "cachedResultUrl": "https://airtable.com/appGjv1f72SG2agoL"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblLgO7vtW4Cj8Jo9",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appGjv1f72SG2agoL/tblLgO7vtW4Cj8Jo9"
+        },
+        "filterByFormula": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Filter_By_Formula', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        -160,
+        -20
+      ],
+      "id": "ae78e46a-43a3-4525-963e-5ac58e3ab745",
+      "name": "Airtable Search",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "wqA6Lc05M0sqefc9",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Airtable Create": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable Searchold": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable Search": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "942dbe28-501e-46f5-9b54-d1fe09f609e8",
+  "triggerCount": 1,
+  "tags": [
+    {
+      "createdAt": "2025-05-19T18:41:32.426Z",
+      "updatedAt": "2025-05-19T18:41:32.426Z",
+      "id": "byJF50EssW8Z7Xdg",
+      "name": "codai"
+    }
+  ]
+}
