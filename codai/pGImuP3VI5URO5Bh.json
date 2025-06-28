@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-05-19T19:39:54.441Z",
-  "updatedAt": "2025-06-27T17:16:25.155Z",
+  "updatedAt": "2025-06-27T17:17:22.984Z",
   "id": "pGImuP3VI5URO5Bh",
   "name": "Backup GitHub",
   "active": true,
@@ -135,8 +135,8 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        1520,
-        440
+        1320,
+        500
       ],
       "id": "1fe19af2-33e6-49a6-9861-bf2913b23889",
       "name": "GitHub Create File",
@@ -170,8 +170,8 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        1520,
-        260
+        1320,
+        320
       ],
       "id": "07acc22c-6d1d-4cef-a889-53ec6d8c9d21",
       "name": "GitHub Edit File",
@@ -195,8 +195,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        1340,
-        260
+        1140,
+        320
       ],
       "id": "19508db7-63b2-481c-b044-6a187201171c",
       "name": "Convert to File Edit"
@@ -213,8 +213,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        1340,
-        440
+        1140,
+        500
       ],
       "id": "b6d535f4-619a-4305-9161-62794ed903ef",
       "name": "Convert to File Create",
@@ -229,8 +229,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1180,
-        260
+        980,
+        320
       ],
       "id": "7a021b6b-68c5-41d7-9593-99e1c513e324",
       "name": "Workflow to Edit"
@@ -245,8 +245,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1180,
-        440
+        980,
+        500
       ],
       "id": "d0cd5847-e34c-4d19-9d72-f71738fd834d",
       "name": "Workflow to Create"
@@ -287,8 +287,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3,
       "position": [
-        1720,
-        360
+        1520,
+        420
       ],
       "id": "18402170-fd68-4372-a9d3-3bd66ca94f1b",
       "name": "Merge",
@@ -351,8 +351,8 @@
       "name": "Replace Me",
       "typeVersion": 1,
       "position": [
-        2060,
-        480
+        1860,
+        540
       ],
       "id": "864ee2f3-cbea-43e1-968b-6fa1f50569f1"
     },
@@ -403,8 +403,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1740,
-        100
+        1540,
+        160
       ],
       "id": "7accdf5f-57e7-43ac-a15a-1b6a7a3924d3",
       "name": "No Operation, do nothing"
@@ -649,7 +649,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "9ddc3f60-6a32-42f8-b162-9cbc9f09fb15",
+  "versionId": "80ce0e16-a7dc-4f4d-b283-b918576c18c9",
   "triggerCount": 1,
   "tags": [
     {
